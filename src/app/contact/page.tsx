@@ -1,337 +1,665 @@
+import type { Metadata } from "next";
+
 import Link from "next/link";
+
+import { Suspense } from "react";
 
 import {
   ArrowRight,
-  Cable,
+  Building2,
   Clock3,
+  FileText,
   Mail,
-  MapPinned,
+  MapPin,
   MessageCircle,
+  Network,
   Phone,
+  RadioTower,
+  ShieldCheck,
 } from "lucide-react";
 
 import ContactForm from "@/components/ContactForm";
-import type { Metadata } from "next";
+
+import { siteConfig } from "@/data/site";
+
+/* =====================================================
+   METADATA
+===================================================== */
 
 export const metadata: Metadata = {
   title: "Contact Us",
+
   description:
-    "Contact Unified Technical Services for GIS, GPON, fiber optic, CCTV, electrical, fire alarm and solar project requirements.",
+    "Contact Unified Technical Services for GIS, Fiber Optic, GPON Planning, CCTV, Electrical, Fire Alarm and Solar Installation services.",
 };
 
 /* =====================================================
-   CONTACT METHODS
-
-   Replace placeholder details with real company
-   information when available.
+   CONTACT PAGE
 ===================================================== */
 
-const contactMethods = [
-  {
-    title: "Call Us",
-    value: "Add company phone number",
-    description: "Speak with our technical team.",
-    icon: Phone,
-  },
-  {
-    title: "Email Us",
-    value: "Add company email address",
-    description: "Send project details and requirements.",
-    icon: Mail,
-  },
-  {
-    title: "Office",
-    value: "Add company office address",
-    description: "Visit us for project discussions.",
-    icon: MapPinned,
-  },
-  {
-    title: "Working Hours",
-    value: "Add working hours",
-    description: "Our standard consultation schedule.",
-    icon: Clock3,
-  },
-];
-
 export default function ContactPage() {
+  const phoneAvailable = Boolean(siteConfig.contact.phone);
+
+  const emailAvailable = Boolean(siteConfig.contact.email);
+
+  const whatsappAvailable = Boolean(siteConfig.contact.whatsapp);
+
+  const addressAvailable = Boolean(siteConfig.contact.address);
+
   return (
     <main className="overflow-hidden bg-[#06111f]">
-      {/* =====================================================
+      {/* =================================================
           HERO
-      ===================================================== */}
+      ================================================= */}
 
-      <section className="tech-grid relative overflow-hidden border-b border-white/10">
-        <div className="absolute left-1/2 top-0 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-sky-500/10 blur-[150px]" />
+      <section className="relative overflow-hidden border-b border-white/10 bg-[#020817]">
+        {/* GRID */}
 
-        <div className="site-container relative py-20 text-center sm:py-24 lg:py-28">
-          <div className="inline-flex rounded-full border border-sky-400/20 bg-sky-400/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-sky-400 sm:text-xs">
-            Contact Us
-          </div>
+        <div className="tech-grid absolute inset-0 opacity-60" />
 
-          <h1 className="mx-auto mt-6 max-w-4xl text-4xl font-black tracking-[-0.04em] text-white sm:text-5xl lg:text-6xl">
-            Let&apos;s Build Something
-            <span className="text-sky-400"> Better.</span>
-          </h1>
+        {/* GLOWS */}
 
-          <p className="mx-auto mt-6 max-w-3xl text-sm leading-7 text-slate-400 sm:text-base lg:text-lg">
-            Have a fiber, GIS, security, electrical, fire-alarm or solar
-            project? Share your requirements and let&apos;s start the
-            conversation.
-          </p>
+        <div className="absolute -left-32 top-10 h-96 w-96 rounded-full bg-sky-500/10 blur-[120px]" />
+
+        <div className="absolute -right-32 top-20 h-96 w-96 rounded-full bg-cyan-400/[0.07] blur-[120px]" />
+
+        {/* NETWORK LINES */}
+
+        <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-20">
+          <div className="absolute left-[8%] top-[28%] h-px w-[20%] rotate-[12deg] bg-gradient-to-r from-transparent via-sky-400 to-transparent" />
+
+          <div className="absolute right-[8%] top-[40%] h-px w-[24%] -rotate-[10deg] bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
+
+          <div className="absolute left-[35%] top-[20%] h-2 w-2 rounded-full bg-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.8)]" />
+
+          <div className="absolute right-[25%] top-[55%] h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.8)]" />
         </div>
-      </section>
 
-      {/* =====================================================
-          CONTACT METHODS
-      ===================================================== */}
+        <div className="site-container relative py-20 sm:py-24 lg:py-28">
+          <div className="mx-auto max-w-4xl text-center">
+            {/* EYEBROW */}
 
-      <section className="border-b border-white/10 bg-[#020817]">
-        <div className="site-container py-8">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {contactMethods.map((method) => {
-              const Icon = method.icon;
+            <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/20 bg-sky-400/[0.06] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-sky-400">
+              <RadioTower size={14} />
+              Connect With Our Team
+            </div>
 
-              return (
-                <div
-                  key={method.title}
-                  className="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5"
+            {/* TITLE */}
+
+            <h1 className="mt-7 text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
+              Let&apos;s Build <span className="text-sky-400">Smarter</span>{" "}
+              Infrastructure.
+            </h1>
+
+            {/* DESCRIPTION */}
+
+            <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base sm:leading-8">
+              Tell us about your technical requirements, project scope or
+              infrastructure challenge. Our team is ready to discuss GIS, fiber,
+              security, electrical, fire-alarm and solar solutions.
+            </p>
+
+            {/* CAPABILITIES */}
+
+            <div className="mt-8 flex flex-wrap justify-center gap-2">
+              {[
+                "GIS",
+                "GPON",
+                "FTTH",
+                "CCTV",
+                "Electrical",
+                "Fire Alarm",
+                "Solar",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-400/10 text-sky-400">
-                    <Icon size={20} />
-                  </div>
-
-                  <div className="mt-4 text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">
-                    {method.title}
-                  </div>
-
-                  <div className="mt-2 text-sm font-bold text-white">
-                    {method.value}
-                  </div>
-
-                  <p className="mt-2 text-xs leading-5 text-slate-500">
-                    {method.description}
-                  </p>
-                </div>
-              );
-            })}
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* =====================================================
-          FORM + CONTACT PANEL
-      ===================================================== */}
+      {/* =================================================
+          CONTACT METHODS
+      ================================================= */}
 
-      <section className="relative py-20 sm:py-24">
-        <div className="absolute -left-40 top-20 h-96 w-96 rounded-full bg-blue-600/10 blur-[120px]" />
+      <section className="relative border-b border-white/[0.06] bg-[#06111f] py-14 sm:py-16">
+        <div className="site-container">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {/* PHONE */}
+
+            <ContactMethodCard
+              icon={Phone}
+              label="Call Us"
+              value={
+                phoneAvailable
+                  ? siteConfig.contact.phoneDisplay
+                  : "Phone number coming soon"
+              }
+              href={
+                phoneAvailable ? `tel:${siteConfig.contact.phone}` : undefined
+              }
+            />
+
+            {/* EMAIL */}
+
+            <ContactMethodCard
+              icon={Mail}
+              label="Email Us"
+              value={
+                emailAvailable
+                  ? siteConfig.contact.emailDisplay
+                  : "Email address coming soon"
+              }
+              href={
+                emailAvailable
+                  ? `mailto:${siteConfig.contact.email}`
+                  : undefined
+              }
+            />
+
+            {/* WHATSAPP */}
+
+            <ContactMethodCard
+              icon={MessageCircle}
+              label="WhatsApp"
+              value={
+                whatsappAvailable
+                  ? "Start a conversation"
+                  : "WhatsApp coming soon"
+              }
+              href={
+                whatsappAvailable
+                  ? `https://wa.me/${siteConfig.contact.whatsapp}`
+                  : undefined
+              }
+              external
+            />
+
+            {/* LOCATION */}
+
+            <ContactMethodCard
+              icon={MapPin}
+              label="Office"
+              value={
+                addressAvailable
+                  ? siteConfig.contact.addressDisplay
+                  : "Office details coming soon"
+              }
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* =================================================
+          PROJECT INQUIRY
+      ================================================= */}
+
+      <section className="relative py-20 sm:py-24 lg:py-28">
+        {/* BACKGROUND */}
+
+        <div className="tech-grid pointer-events-none absolute inset-0 opacity-30" />
+
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-sky-500/[0.04] blur-[130px]" />
 
         <div className="site-container relative">
-          <div className="grid items-start gap-8 lg:grid-cols-[0.65fr_1.35fr]">
-            {/* LEFT PANEL */}
+          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
+            {/* =========================================
+                LEFT SIDE
+            ========================================= */}
 
-            <div className="space-y-6 lg:sticky lg:top-28">
-              <div>
-                <div className="text-xs font-bold uppercase tracking-[0.25em] text-sky-400">
-                  Start a Project
+            <div className="lg:pt-5">
+              <div className="text-xs font-bold uppercase tracking-[0.2em] text-sky-400">
+                Start a Project
+              </div>
+
+              <h2 className="mt-4 text-3xl font-black tracking-tight text-white sm:text-4xl">
+                Tell Us What You Need.
+              </h2>
+
+              <p className="mt-5 max-w-lg text-sm leading-7 text-slate-400">
+                Whether you&apos;re planning a fiber network, organizing GIS
+                data, deploying security systems or building technical
+                infrastructure, share the project details with our team.
+              </p>
+
+              {/* INFO CARDS */}
+
+              <div className="mt-9 space-y-4">
+                <ProjectInfo
+                  icon={Network}
+                  title="Technical Requirements"
+                  description="Describe the service, scope, project location and any specific technical requirements."
+                />
+
+                <ProjectInfo
+                  icon={FileText}
+                  title="Attach Project Files"
+                  description="You can include drawings, spreadsheets, KML/KMZ files, documents and other supported project material."
+                />
+
+                <ProjectInfo
+                  icon={ShieldCheck}
+                  title="Direct Communication"
+                  description="Your inquiry is delivered directly to our team so we can review the project requirements."
+                />
+              </div>
+
+              {/* PROCESS */}
+
+              <div className="mt-10 rounded-2xl border border-white/10 bg-[#08192b]/80 p-6">
+                <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-sky-400">
+                  How It Works
                 </div>
 
-                <h2 className="mt-4 text-3xl font-black tracking-tight text-white sm:text-4xl">
-                  Tell Us What You
-                  <span className="text-sky-400"> Need.</span>
+                <div className="mt-5 space-y-5">
+                  <ProcessStep number="01" title="Submit Inquiry" />
+
+                  <ProcessStep number="02" title="Technical Review" />
+
+                  <ProcessStep number="03" title="Project Discussion" />
+
+                  <ProcessStep number="04" title="Solution & Proposal" />
+                </div>
+              </div>
+            </div>
+
+            {/* =========================================
+                CONTACT FORM
+
+                IMPORTANT:
+                ContactForm uses useSearchParams().
+                Suspense prevents the Next.js
+                production prerender error.
+            ========================================= */}
+
+            <div>
+              <Suspense fallback={<ContactFormLoading />}>
+                <ContactForm />
+              </Suspense>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =================================================
+          HELPFUL INFORMATION
+      ================================================= */}
+
+      <section className="border-y border-white/[0.06] bg-[#020817] py-16 sm:py-20">
+        <div className="site-container">
+          <div className="grid gap-8 lg:grid-cols-3">
+            {/* PROJECT DETAILS */}
+
+            <InfoBlock
+              icon={Building2}
+              title="Project Information"
+              description="Providing clear project scope, location and service requirements helps our team understand your technical needs."
+            />
+
+            {/* WORKING HOURS */}
+
+            <InfoBlock
+              icon={Clock3}
+              title="Working Hours"
+              description={
+                siteConfig.contact.workingHours ||
+                "Company working hours will be added here."
+              }
+            />
+
+            {/* DOCUMENTS */}
+
+            <InfoBlock
+              icon={FileText}
+              title="Technical Documents"
+              description="Attach available drawings, BOQs, GIS data, spreadsheets, KML/KMZ files or supporting project documents."
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* =================================================
+          WHATSAPP / QUICK CONTACT
+      ================================================= */}
+
+      <section className="relative py-20">
+        <div className="site-container">
+          <div className="relative overflow-hidden rounded-3xl border border-sky-400/20 bg-gradient-to-br from-[#08192b] to-[#020817] p-7 sm:p-10 lg:p-12">
+            {/* GRID */}
+
+            <div className="tech-grid pointer-events-none absolute inset-0 opacity-30" />
+
+            {/* GLOW */}
+
+            <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-sky-500/10 blur-[90px]" />
+
+            <div className="relative grid items-center gap-8 lg:grid-cols-[1fr_auto]">
+              <div>
+                <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-sky-400">
+                  <MessageCircle size={16} />
+                  Quick Contact
+                </div>
+
+                <h2 className="mt-4 text-2xl font-black text-white sm:text-3xl">
+                  Need to Discuss a Project Directly?
                 </h2>
 
-                <p className="mt-5 text-sm leading-7 text-slate-400">
-                  Whether you&apos;re planning a new fiber network, preparing
-                  GIS data, installing CCTV or developing electrical and
-                  renewable-energy infrastructure, send us your requirements.
+                <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-400">
+                  For project discussions, technical requirements or service
+                  information, use the inquiry form or contact our team directly
+                  when company contact details are available.
                 </p>
               </div>
 
-              {/* WHAT TO SEND */}
+              {whatsappAvailable ? (
+                <a
+                  href={`https://wa.me/${siteConfig.contact.whatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-500 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-sky-400 hover:shadow-lg hover:shadow-sky-500/20"
+                >
+                  <MessageCircle size={18} />
+                  WhatsApp Us
+                  <ArrowRight size={16} />
+                </a>
+              ) : (
+                <Link
+                  href="#project-inquiry"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-500 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-sky-400 hover:shadow-lg hover:shadow-sky-500/20"
+                >
+                  Project Inquiry
+                  <ArrowRight size={16} />
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
 
-              <div className="rounded-2xl border border-white/10 bg-[#08192b] p-6">
-                <h3 className="font-bold text-white">
-                  Helpful Project Information
-                </h3>
+      {/* =================================================
+          OFFICE / MAP PLACEHOLDER
+      ================================================= */}
 
-                <div className="mt-5 space-y-4">
-                  {[
-                    "Project location or service area",
-                    "Required technical service",
-                    "Expected project scope",
-                    "Existing drawings or GIS data",
-                    "Target schedule or deadline",
-                  ].map((item) => (
-                    <div
-                      key={item}
-                      className="flex items-start gap-3 text-sm text-slate-400"
-                    >
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-400" />
-                      {item}
-                    </div>
-                  ))}
+      <section className="pb-20 sm:pb-24">
+        <div className="site-container">
+          <div className="overflow-hidden rounded-3xl border border-white/10 bg-[#08192b]">
+            <div className="grid lg:grid-cols-[0.7fr_1.3fr]">
+              {/* DETAILS */}
+
+              <div className="p-7 sm:p-9 lg:p-10">
+                <div className="text-xs font-bold uppercase tracking-[0.2em] text-sky-400">
+                  Our Office
                 </div>
+
+                <h2 className="mt-4 text-2xl font-black text-white">
+                  Visit Unified Technical Services
+                </h2>
+
+                <p className="mt-4 text-sm leading-7 text-slate-400">
+                  {addressAvailable
+                    ? siteConfig.contact.addressDisplay
+                    : "Our official office address and map location will be published here once the company contact details are finalized."}
+                </p>
+
+                {addressAvailable && (
+                  <div className="mt-6 flex items-start gap-3 rounded-xl border border-white/10 bg-[#020817]/50 p-4">
+                    <MapPin
+                      size={18}
+                      className="mt-0.5 shrink-0 text-sky-400"
+                    />
+
+                    <span className="text-sm leading-6 text-slate-300">
+                      {siteConfig.contact.addressDisplay}
+                    </span>
+                  </div>
+                )}
               </div>
 
-              {/* QUICK CONTACT */}
+              {/* MAP VISUAL */}
 
-              <div className="relative overflow-hidden rounded-2xl border border-sky-400/20 bg-sky-400/[0.06] p-6">
-                <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-sky-400/10 blur-[50px]" />
+              <div className="relative flex min-h-[320px] items-center justify-center overflow-hidden border-t border-white/10 bg-[#020817] lg:border-l lg:border-t-0">
+                <div className="tech-grid absolute inset-0 opacity-60" />
 
-                <div className="relative">
-                  <MessageCircle size={25} className="text-sky-400" />
+                {/* DECORATIVE ROUTE */}
 
-                  <h3 className="mt-4 font-bold text-white">
-                    Need a Quick Discussion?
-                  </h3>
+                <div className="absolute left-[12%] top-[25%] h-2 w-2 rounded-full bg-sky-400 shadow-[0_0_18px_rgba(56,189,248,0.8)]" />
 
-                  <p className="mt-2 text-sm leading-6 text-slate-400">
-                    We can add a direct WhatsApp consultation button here once
-                    your official business number is finalized.
+                <div className="absolute right-[18%] top-[60%] h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_18px_rgba(34,211,238,0.8)]" />
+
+                <div className="absolute left-[15%] top-[28%] h-px w-[65%] rotate-[18deg] bg-gradient-to-r from-sky-400/70 via-cyan-400/30 to-transparent" />
+
+                <div className="relative text-center">
+                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-sky-400/20 bg-sky-400/10 text-sky-400">
+                    <MapPin size={28} />
+                  </div>
+
+                  <div className="mt-5 text-sm font-bold text-white">
+                    Office Location
+                  </div>
+
+                  <p className="mt-2 text-xs text-slate-500">
+                    Map integration will appear here.
                   </p>
                 </div>
               </div>
             </div>
-
-            {/* RIGHT FORM */}
-
-            <ContactForm />
           </div>
         </div>
       </section>
 
-      {/* =====================================================
-          MAP / OFFICE AREA
-      ===================================================== */}
-
-      <section className="border-y border-white/10 bg-[#020817] py-20">
-        <div className="site-container">
-          <div className="grid overflow-hidden rounded-3xl border border-white/10 bg-[#08192b] lg:grid-cols-2">
-            {/* MAP PLACEHOLDER */}
-
-            <div className="tech-grid relative min-h-[380px] overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-sky-500/[0.04] to-transparent" />
-
-              <svg
-                className="absolute inset-0 h-full w-full opacity-40"
-                viewBox="0 0 600 400"
-                fill="none"
-              >
-                <path
-                  d="M30 320 C130 250 130 150 240 170 C350 190 390 70 570 80"
-                  stroke="#0ea5e9"
-                  strokeWidth="2"
-                  strokeDasharray="8 8"
-                />
-
-                <path
-                  d="M70 50 C150 100 200 270 330 290 C430 305 480 220 570 250"
-                  stroke="#22d3ee"
-                  strokeWidth="1.5"
-                  strokeDasharray="6 8"
-                />
-              </svg>
-
-              <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full border border-sky-400/30 bg-[#020817] text-sky-400 shadow-[0_0_60px_rgba(14,165,233,0.25)]">
-                  <MapPinned size={28} />
-                </div>
-
-                <div className="mt-4 rounded-full border border-white/10 bg-[#020817]/90 px-5 py-2 text-xs font-semibold text-slate-300">
-                  Office Location
-                </div>
-              </div>
-            </div>
-
-            {/* OFFICE CONTENT */}
-
-            <div className="flex items-center p-7 sm:p-10 lg:p-12">
-              <div>
-                <div className="text-xs font-bold uppercase tracking-[0.25em] text-sky-400">
-                  Visit Us
-                </div>
-
-                <h2 className="mt-4 text-3xl font-black text-white">
-                  Let&apos;s Discuss Your Project.
-                </h2>
-
-                <p className="mt-5 max-w-lg text-sm leading-7 text-slate-400">
-                  Once the official office address is confirmed, this section
-                  can display an interactive map, directions and complete
-                  contact information.
-                </p>
-
-                <div className="mt-7 flex items-start gap-4">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sky-400/10 text-sky-400">
-                    <MapPinned size={21} />
-                  </div>
-
-                  <div>
-                    <div className="text-sm font-bold text-white">
-                      UnifiedTechnicalServices
-                    </div>
-
-                    <div className="mt-1 text-sm text-slate-500">
-                      Company office address will appear here.
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-5 flex items-start gap-4">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sky-400/10 text-sky-400">
-                    <Clock3 size={21} />
-                  </div>
-
-                  <div>
-                    <div className="text-sm font-bold text-white">
-                      Working Hours
-                    </div>
-
-                    <div className="mt-1 text-sm text-slate-500">
-                      Business schedule will appear here.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================
+      {/* =================================================
           FINAL CTA
-      ===================================================== */}
+      ================================================= */}
 
-      <section className="py-20">
+      <section className="border-t border-white/[0.06] bg-[#020817] py-16">
         <div className="site-container">
-          <div className="relative overflow-hidden rounded-3xl border border-sky-400/20 bg-[#08192b] px-6 py-12 text-center sm:px-10 sm:py-16">
-            <div className="absolute left-1/2 top-0 h-64 w-[650px] -translate-x-1/2 rounded-full bg-sky-500/10 blur-[100px]" />
-
-            <div className="relative">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-400/10 text-sky-400">
-                <Cable size={27} />
+          <div className="flex flex-col items-center justify-between gap-7 text-center lg:flex-row lg:text-left">
+            <div>
+              <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-sky-400">
+                Unified Technical Services
               </div>
 
-              <h2 className="mt-6 text-3xl font-black text-white sm:text-4xl">
-                Your Next Project Starts Here.
+              <h2 className="mt-3 text-2xl font-black text-white sm:text-3xl">
+                Connect. Plan. Build. Sustain.
               </h2>
 
-              <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
-                Explore our technical capabilities or send us your project
-                requirements to begin the discussion.
+              <p className="mt-3 max-w-xl text-sm leading-6 text-slate-400">
+                Integrated technical solutions for smarter, safer and more
+                sustainable infrastructure.
               </p>
-
-              <Link
-                href="/services"
-                className="mt-8 inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
-              >
-                Explore Our Services
-                <ArrowRight size={17} />
-              </Link>
             </div>
+
+            <Link
+              href="/services"
+              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.05] px-6 py-3.5 text-sm font-bold text-white transition hover:border-sky-400/30 hover:bg-sky-400/10"
+            >
+              Explore Services
+              <ArrowRight size={16} />
+            </Link>
           </div>
         </div>
       </section>
     </main>
+  );
+}
+
+/* =====================================================
+   CONTACT FORM LOADING
+
+   Required as the Suspense fallback for ContactForm.
+===================================================== */
+
+function ContactFormLoading() {
+  return (
+    <div className="flex min-h-[540px] items-center justify-center rounded-3xl border border-white/10 bg-[#08192b] p-8 shadow-2xl shadow-black/20">
+      <div className="text-center">
+        {/* SPINNER */}
+
+        <div className="mx-auto h-9 w-9 animate-spin rounded-full border-2 border-slate-700 border-t-sky-400" />
+
+        <div className="mt-5 text-sm font-semibold text-white">
+          Loading Project Inquiry
+        </div>
+
+        <p className="mt-2 text-xs text-slate-500">
+          Preparing the inquiry form...
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* =====================================================
+   CONTACT METHOD CARD
+===================================================== */
+
+type ContactMethodCardProps = {
+  icon: React.ComponentType<{
+    size?: number;
+    className?: string;
+  }>;
+
+  label: string;
+
+  value: string;
+
+  href?: string;
+
+  external?: boolean;
+};
+
+function ContactMethodCard({
+  icon: Icon,
+  label,
+  value,
+  href,
+  external = false,
+}: ContactMethodCardProps) {
+  const content = (
+    <div className="group h-full rounded-2xl border border-white/10 bg-[#08192b] p-5 transition hover:border-sky-400/30 hover:bg-[#0a1f35]">
+      <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-sky-400/20 bg-sky-400/10 text-sky-400">
+        <Icon size={20} />
+      </div>
+
+      <div className="mt-5 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">
+        {label}
+      </div>
+
+      <div className="mt-2 break-words text-sm font-semibold leading-6 text-slate-200 transition group-hover:text-white">
+        {value}
+      </div>
+    </div>
+  );
+
+  if (!href) {
+    return content;
+  }
+
+  if (external) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block h-full"
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <a href={href} className="block h-full">
+      {content}
+    </a>
+  );
+}
+
+/* =====================================================
+   PROJECT INFO
+===================================================== */
+
+type ProjectInfoProps = {
+  icon: React.ComponentType<{
+    size?: number;
+    className?: string;
+  }>;
+
+  title: string;
+
+  description: string;
+};
+
+function ProjectInfo({ icon: Icon, title, description }: ProjectInfoProps) {
+  return (
+    <div className="flex gap-4">
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-sky-400/20 bg-sky-400/10 text-sky-400">
+        <Icon size={19} />
+      </div>
+
+      <div>
+        <h3 className="text-sm font-bold text-white">{title}</h3>
+
+        <p className="mt-1 text-xs leading-6 text-slate-500">{description}</p>
+      </div>
+    </div>
+  );
+}
+
+/* =====================================================
+   PROCESS STEP
+===================================================== */
+
+type ProcessStepProps = {
+  number: string;
+
+  title: string;
+};
+
+function ProcessStep({ number, title }: ProcessStepProps) {
+  return (
+    <div className="flex items-center gap-4">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-sky-400/20 bg-sky-400/[0.07] font-mono text-[10px] font-bold text-sky-400">
+        {number}
+      </div>
+
+      <div className="h-px w-5 bg-sky-400/20" />
+
+      <div className="text-sm font-semibold text-slate-300">{title}</div>
+    </div>
+  );
+}
+
+/* =====================================================
+   INFORMATION BLOCK
+===================================================== */
+
+type InfoBlockProps = {
+  icon: React.ComponentType<{
+    size?: number;
+    className?: string;
+  }>;
+
+  title: string;
+
+  description: string;
+};
+
+function InfoBlock({ icon: Icon, title, description }: InfoBlockProps) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-[#08192b]/60 p-6">
+      <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-sky-400/20 bg-sky-400/10 text-sky-400">
+        <Icon size={20} />
+      </div>
+
+      <h3 className="mt-5 text-base font-bold text-white">{title}</h3>
+
+      <p className="mt-3 text-sm leading-7 text-slate-400">{description}</p>
+    </div>
   );
 }
