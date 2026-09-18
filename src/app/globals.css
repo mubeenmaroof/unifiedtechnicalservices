@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* =====================================================
+   ROOT VARIABLES
+===================================================== */
+
 :root {
   --background: #06111f;
   --foreground: #f8fafc;
@@ -16,6 +20,10 @@
   --border: rgba(148, 163, 184, 0.18);
 }
 
+/* =====================================================
+   GLOBAL
+===================================================== */
+
 * {
   box-sizing: border-box;
 }
@@ -26,9 +34,11 @@ html {
 
 body {
   margin: 0;
+
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
 
 ::selection {
@@ -36,11 +46,34 @@ body {
   color: white;
 }
 
-/* Reusable container */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* =====================================================
+   SITE CONTAINER
+===================================================== */
+
 .site-container {
   width: 100%;
   max-width: 1280px;
+
   margin-inline: auto;
+
   padding-inline: 1rem;
 }
 
@@ -56,7 +89,10 @@ body {
   }
 }
 
-/* Subtle engineering grid */
+/* =====================================================
+   TECHNICAL GRID
+===================================================== */
+
 .tech-grid {
   background-image:
     linear-gradient(rgba(14, 165, 233, 0.04) 1px, transparent 1px),
@@ -65,17 +101,21 @@ body {
   background-size: 40px 40px;
 }
 
-/* Blue glow */
+/* =====================================================
+   GLOW
+===================================================== */
+
 .blue-glow {
   box-shadow: 0 0 50px rgba(14, 165, 233, 0.15);
 }
 
-/* ================================================
+/* =====================================================
    SCROLLBAR
-================================================ */
+===================================================== */
 
 ::-webkit-scrollbar {
   width: 10px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -84,6 +124,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: #1e3a55;
+
   border: 2px solid #020817;
   border-radius: 999px;
 }
@@ -92,21 +133,95 @@ body {
   background: #0ea5e9;
 }
 
-/* ================================================
-   LINKS / BUTTONS
-================================================ */
+/* =====================================================
+   FLOAT ANIMATION
+===================================================== */
 
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
-/* ================================================
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 6s ease-in-out 1s infinite;
+}
+
+/* =====================================================
+   SOFT PULSE
+===================================================== */
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 3s ease-in-out infinite;
+}
+
+/* =====================================================
+   NETWORK PULSE
+===================================================== */
+
+@keyframes network-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.25);
+  }
+
+  70% {
+    box-shadow: 0 0 0 14px rgba(14, 165, 233, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(14, 165, 233, 0);
+  }
+}
+
+.network-pulse {
+  animation: network-pulse 2.5s infinite;
+}
+
+/* =====================================================
    MOBILE
-================================================ */
+===================================================== */
 
 @media (max-width: 640px) {
   .tech-grid {
     background-size: 28px 28px;
+  }
+}
+
+/* =====================================================
+   ACCESSIBILITY
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+
+    scroll-behavior: auto !important;
   }
 }

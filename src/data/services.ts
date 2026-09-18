@@ -4,11 +4,17 @@ export const services = [
   {
     id: "fiber",
     number: "01",
+
     title: "Fiber Optic & Telecom",
     shortTitle: "Fiber & GPON Planning",
+
+    image: "/images/services/fiber.png",
+
     shortDescription: "FTTH, FTTB, FTTX, GPON and ADT/FDT planning solutions.",
+
     description:
       "End-to-end fiber optic network planning and design services covering access networks, GPON architecture, route planning, distribution networks and technical documentation.",
+
     icon: Cable,
 
     items: [
@@ -26,12 +32,18 @@ export const services = [
   {
     id: "gis",
     number: "02",
+
     title: "GIS & Geospatial Services",
     shortTitle: "GIS & Mapping Services",
+
+    image: "/images/services/gis.png",
+
     shortDescription:
       "ArcGIS, QGIS, RS/GIS, spatial analysis and infrastructure mapping.",
+
     description:
       "Professional geospatial services supporting telecom, infrastructure and engineering projects through mapping, spatial analysis, asset management and GIS-based planning.",
+
     icon: Map,
 
     items: [
@@ -53,12 +65,18 @@ export const services = [
   {
     id: "cctv",
     number: "03",
+
     title: "CCTV & Security Solutions",
     shortTitle: "CCTV & Security",
+
+    image: "/images/services/cctv.png",
+
     shortDescription:
       "Professional surveillance planning, installation and monitoring.",
+
     description:
       "Security and surveillance solutions for residential, commercial and infrastructure environments with reliable monitoring and scalable system design.",
+
     icon: Camera,
 
     items: [
@@ -76,12 +94,18 @@ export const services = [
   {
     id: "electrical",
     number: "04",
+
     title: "Electrical Works",
     shortTitle: "Electrical Works",
+
+    image: "/images/services/electrical.png",
+
     shortDescription:
       "Single-phase, three-phase and electrical as-built solutions.",
+
     description:
       "Electrical installation and documentation services for residential, commercial and technical infrastructure projects.",
+
     icon: Zap,
 
     items: [
@@ -99,12 +123,18 @@ export const services = [
   {
     id: "fire",
     number: "05",
+
     title: "Fire Alarm Systems",
     shortTitle: "Fire Alarm Systems",
+
+    image: "/images/services/fire-alarm.png",
+
     shortDescription:
       "Fire alarm design, installation, testing and commissioning.",
+
     description:
       "Fire detection and alarm systems designed to provide reliable protection for buildings, businesses and technical facilities.",
+
     icon: Flame,
 
     items: [
@@ -122,11 +152,17 @@ export const services = [
   {
     id: "solar",
     number: "06",
+
     title: "Solar Energy Solutions",
     shortTitle: "Solar Installation",
+
+    image: "/images/services/solar.png",
+
     shortDescription: "Residential, commercial and industrial solar solutions.",
+
     description:
       "Solar-energy design and installation services focused on reliable, efficient and sustainable power solutions.",
+
     icon: PanelsTopLeft,
 
     items: [

@@ -8,26 +8,62 @@ import {
   Mail,
   MapPin,
   Phone,
-  RadioTower,
 } from "lucide-react";
 
+import BrandLogo from "@/components/BrandLogo";
+import { siteConfig } from "@/data/site";
+
+/* =====================================================
+   FOOTER LINKS
+===================================================== */
+
 const companyLinks = [
-  { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
-  { label: "Services", href: "/services" },
-  { label: "Contact Us", href: "/contact" },
+  {
+    label: "Home",
+    href: "/",
+  },
+  {
+    label: "About Us",
+    href: "/about",
+  },
+  {
+    label: "Services",
+    href: "/services",
+  },
+  {
+    label: "Contact Us",
+    href: "/contact",
+  },
 ];
 
 const serviceLinks = [
-  { label: "Fiber & GPON Planning", href: "/services#fiber" },
-  { label: "GIS & Mapping", href: "/services#gis" },
-  { label: "CCTV & Security", href: "/services#cctv" },
-  { label: "Electrical Works", href: "/services#electrical" },
-  { label: "Fire Alarm Systems", href: "/services#fire" },
-  { label: "Solar Solutions", href: "/services#solar" },
+  {
+    label: "Fiber & GPON Planning",
+    href: "/services#fiber",
+  },
+  {
+    label: "GIS & Mapping",
+    href: "/services#gis",
+  },
+  {
+    label: "CCTV & Security",
+    href: "/services#cctv",
+  },
+  {
+    label: "Electrical Works",
+    href: "/services#electrical",
+  },
+  {
+    label: "Fire Alarm Systems",
+    href: "/services#fire",
+  },
+  {
+    label: "Solar Solutions",
+    href: "/services#solar",
+  },
 ];
 
-const telecomLinks = [
+const technicalLinks = [
   "FTTH Planning",
   "FTTB Planning",
   "FTTX Planning",
@@ -36,70 +72,128 @@ const telecomLinks = [
   "ArcGIS & QGIS",
 ];
 
+/* =====================================================
+   FOOTER
+===================================================== */
+
 export default function Footer() {
+  const phoneAvailable = Boolean(siteConfig.contact.phone);
+
+  const emailAvailable = Boolean(siteConfig.contact.email);
+
+  const addressAvailable = Boolean(siteConfig.contact.address);
+
+  const facebookAvailable = Boolean(siteConfig.social.facebook);
+
+  const linkedinAvailable = Boolean(siteConfig.social.linkedin);
+
   return (
     <footer className="relative overflow-hidden border-t border-white/10 bg-[#020817]">
-      {/* Background effects */}
+      {/* =================================================
+          BACKGROUND EFFECTS
+      ================================================= */}
 
       <div className="pointer-events-none absolute -bottom-40 left-1/2 h-96 w-[700px] -translate-x-1/2 rounded-full bg-sky-500/[0.05] blur-[120px]" />
 
-      {/* =====================================================
+      <div className="pointer-events-none absolute right-0 top-0 h-72 w-72 rounded-full bg-blue-600/[0.04] blur-[100px]" />
+
+      {/* =================================================
           MAIN FOOTER
-      ===================================================== */}
+      ================================================= */}
 
       <div className="site-container relative py-14 sm:py-16">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_0.7fr_1fr_1fr]">
-          {/* BRAND */}
+          {/* =============================================
+              BRAND / COMPANY INFORMATION
+          ============================================= */}
 
           <div>
-            <Link href="/" className="inline-flex items-center gap-3">
-              <div className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-sky-400 to-blue-700 shadow-lg shadow-sky-500/20">
-                <RadioTower size={24} className="text-white" />
-              </div>
-
-              <div className="leading-tight">
-                <div className="text-lg font-bold tracking-tight text-white">
-                  Unified
-                  <span className="text-sky-400">Technical</span>
-                  Services
-                </div>
-
-                <div className="mt-1 text-[9px] font-semibold uppercase tracking-[0.23em] text-slate-500">
-                  Connect | Plan | Build | Sustain
-                </div>
-              </div>
-            </Link>
+            <BrandLogo />
 
             <p className="mt-6 max-w-sm text-sm leading-7 text-slate-400">
-              Integrated technical solutions across GIS, fiber-optic networks,
-              security, electrical infrastructure, fire-alarm systems and
-              renewable energy.
+              {siteConfig.description}
             </p>
 
-            {/* Contact details */}
+            {/* CONTACT INFORMATION */}
 
             <div className="mt-7 space-y-3">
-              <div className="flex items-center gap-3 text-sm text-slate-400">
-                <Phone size={16} className="shrink-0 text-sky-400" />
+              {/* PHONE */}
 
-                <span>Add company phone number</span>
-              </div>
+              {phoneAvailable ? (
+                <a
+                  href={`tel:${siteConfig.contact.phone}`}
+                  className="group flex w-fit items-center gap-3 text-sm text-slate-400 transition hover:text-white"
+                >
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-400/10 text-sky-400 transition group-hover:bg-sky-400/15">
+                    <Phone size={15} />
+                  </div>
 
-              <div className="flex items-center gap-3 text-sm text-slate-400">
-                <Mail size={16} className="shrink-0 text-sky-400" />
+                  <span>{siteConfig.contact.phoneDisplay}</span>
+                </a>
+              ) : (
+                <div className="flex items-center gap-3 text-sm text-slate-500">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/[0.03] text-slate-500">
+                    <Phone size={15} />
+                  </div>
 
-                <span>Add company email</span>
-              </div>
+                  <span>{siteConfig.contact.phoneDisplay}</span>
+                </div>
+              )}
 
-              <div className="flex items-start gap-3 text-sm text-slate-400">
-                <MapPin size={16} className="mt-0.5 shrink-0 text-sky-400" />
+              {/* EMAIL */}
 
-                <span>Add company office address</span>
-              </div>
+              {emailAvailable ? (
+                <a
+                  href={`mailto:${siteConfig.contact.email}`}
+                  className="group flex w-fit items-center gap-3 text-sm text-slate-400 transition hover:text-white"
+                >
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-400/10 text-sky-400 transition group-hover:bg-sky-400/15">
+                    <Mail size={15} />
+                  </div>
+
+                  <span className="break-all">
+                    {siteConfig.contact.emailDisplay}
+                  </span>
+                </a>
+              ) : (
+                <div className="flex items-center gap-3 text-sm text-slate-500">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/[0.03] text-slate-500">
+                    <Mail size={15} />
+                  </div>
+
+                  <span>{siteConfig.contact.emailDisplay}</span>
+                </div>
+              )}
+
+              {/* ADDRESS */}
+
+              {addressAvailable ? (
+                <div className="flex items-start gap-3 text-sm text-slate-400">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-sky-400/10 text-sky-400">
+                    <MapPin size={15} />
+                  </div>
+
+                  <span className="max-w-xs pt-1.5 leading-5">
+                    {siteConfig.contact.addressDisplay}
+                  </span>
+                </div>
+              ) : (
+                <div className="flex items-start gap-3 text-sm text-slate-500">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.03] text-slate-500">
+                    <MapPin size={15} />
+                  </div>
+
+                  <span className="max-w-xs pt-1.5 leading-5">
+                    {siteConfig.contact.addressDisplay}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* COMPANY */}
+          {/* =============================================
+              COMPANY LINKS
+          ============================================= */}
 
           <div>
             <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-white">
@@ -111,16 +205,22 @@ export default function Footer() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="flex items-center gap-2 text-sm text-slate-400 transition hover:translate-x-1 hover:text-sky-400"
+                  className="group flex w-fit items-center gap-2 text-sm text-slate-400 transition hover:translate-x-1 hover:text-sky-400"
                 >
-                  <ArrowUpRight size={13} />
+                  <ArrowUpRight
+                    size={13}
+                    className="text-slate-600 transition group-hover:text-sky-400"
+                  />
+
                   {link.label}
                 </Link>
               ))}
             </div>
           </div>
 
-          {/* SERVICES */}
+          {/* =============================================
+              SERVICES
+          ============================================= */}
 
           <div>
             <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-white">
@@ -132,7 +232,7 @@ export default function Footer() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="block text-sm text-slate-400 transition hover:text-sky-400"
+                  className="block w-fit text-sm text-slate-400 transition hover:translate-x-1 hover:text-sky-400"
                 >
                   {link.label}
                 </Link>
@@ -140,7 +240,9 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* TECHNICAL */}
+          {/* =============================================
+              TECHNICAL EXPERTISE
+          ============================================= */}
 
           <div>
             <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-white">
@@ -148,12 +250,12 @@ export default function Footer() {
             </h3>
 
             <div className="mt-6 space-y-3">
-              {telecomLinks.map((item) => (
+              {technicalLinks.map((item) => (
                 <div
                   key={item}
-                  className="flex items-center gap-2 text-sm text-slate-400"
+                  className="flex items-center gap-3 text-sm text-slate-400"
                 >
-                  <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-sky-400" />
 
                   {item}
                 </div>
@@ -162,68 +264,93 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* =====================================================
-            CONTACT CTA
-        ===================================================== */}
+        {/* =================================================
+            PROJECT CTA
+        ================================================= */}
 
-        <div className="mt-12 flex flex-col gap-5 rounded-2xl border border-white/10 bg-white/[0.025] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-          <div className="flex items-start gap-4">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sky-400/10 text-sky-400">
-              <Cable size={21} />
-            </div>
+        <div className="relative mt-12 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025]">
+          <div className="pointer-events-none absolute -right-20 -top-20 h-52 w-52 rounded-full bg-sky-500/[0.07] blur-[70px]" />
 
-            <div>
-              <div className="font-bold text-white">
-                Have a technical project?
+          <div className="relative flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+            <div className="flex items-start gap-4">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-sky-400/10 bg-sky-400/10 text-sky-400">
+                <Cable size={21} />
               </div>
 
-              <div className="mt-1 text-sm text-slate-500">
-                Tell us about your requirements and project scope.
+              <div>
+                <div className="font-bold text-white">
+                  Have a technical project?
+                </div>
+
+                <div className="mt-1 max-w-xl text-sm leading-6 text-slate-500">
+                  Tell us about your requirements, location and project scope.
+                  We&apos;ll help identify the right technical solution.
+                </div>
               </div>
             </div>
+
+            <Link
+              href="/contact"
+              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-sky-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-400 hover:shadow-lg hover:shadow-sky-500/20"
+            >
+              Get a Quote
+              <ArrowUpRight size={16} />
+            </Link>
           </div>
-
-          <Link
-            href="/contact"
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-sky-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-400"
-          >
-            Get a Quote
-            <ArrowUpRight size={16} />
-          </Link>
         </div>
       </div>
 
-      {/* =====================================================
-          BOTTOM BAR
-      ===================================================== */}
+      {/* =================================================
+          BOTTOM FOOTER
+      ================================================= */}
 
       <div className="relative border-t border-white/10">
         <div className="site-container flex flex-col gap-5 py-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+          {/* COPYRIGHT */}
+
           <div>
-            © {new Date().getFullYear()} UnifiedTechnicalServices. All rights
-            reserved.
+            © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </div>
 
+          {/* RIGHT SIDE */}
+
           <div className="flex flex-wrap items-center gap-5">
-            <Link href="/" className="transition hover:text-sky-400">
-              Privacy Policy
-            </Link>
+            {/* Keep these as text until the actual
+                policy pages are created. */}
 
-            <Link href="/" className="transition hover:text-sky-400">
-              Terms & Conditions
-            </Link>
+            <span>Privacy Policy</span>
 
-            {/* Social placeholders */}
+            <span>Terms & Conditions</span>
 
-            <div className="flex items-center gap-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] text-slate-400 transition hover:border-sky-400/30 hover:text-sky-400">
-                <Globe size={14} />
-              </span>
+            {/* SOCIAL LINKS */}
 
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] text-slate-400 transition hover:border-sky-400/30 hover:text-sky-400">
-                <Link2 size={14} />
-              </span>
-            </div>
+            {(facebookAvailable || linkedinAvailable) && (
+              <div className="flex items-center gap-2">
+                {facebookAvailable && (
+                  <a
+                    href={siteConfig.social.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Facebook"
+                    className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] text-slate-400 transition hover:border-sky-400/30 hover:bg-sky-400/10 hover:text-sky-400"
+                  >
+                    <Globe size={14} />
+                  </a>
+                )}
+
+                {linkedinAvailable && (
+                  <a
+                    href={siteConfig.social.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                    className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] text-slate-400 transition hover:border-sky-400/30 hover:bg-sky-400/10 hover:text-sky-400"
+                  >
+                    <Link2 size={14} />
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

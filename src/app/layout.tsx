@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+
 import { Geist, Geist_Mono } from "next/font/google";
-import Footer from "@/components/Footer";
 
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import FloatingContact from "@/components/FloatingContact";
 
 import "./globals.css";
 
@@ -19,6 +21,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     default: "Unified Technical Services",
+
     template: "%s | Unified Technical Services",
   },
 
@@ -57,6 +60,8 @@ export default function RootLayout({
         {children}
 
         <Footer />
+
+        <FloatingContact />
       </body>
     </html>
   );

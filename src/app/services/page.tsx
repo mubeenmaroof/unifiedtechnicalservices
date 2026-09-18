@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+
+import Image from "next/image";
 import Link from "next/link";
 
 import {
@@ -11,10 +14,10 @@ import {
 } from "lucide-react";
 
 import { services } from "@/data/services";
-import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Services",
+
   description:
     "Explore fiber optic, GPON planning, GIS, ArcGIS, QGIS, CCTV, electrical, fire alarm and solar services from Unified Technical Services.",
 };
@@ -149,37 +152,53 @@ export default function ServicesPage() {
                   className="scroll-mt-28 overflow-hidden rounded-3xl border border-white/10 bg-[#08192b]"
                 >
                   <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
-                    {/* SERVICE INTRODUCTION */}
+                    {/* =====================================
+                        SERVICE IMAGE
+                    ===================================== */}
 
                     <div
-                      className={`relative overflow-hidden p-7 sm:p-9 lg:p-12 ${
+                      className={`relative min-h-[430px] overflow-hidden ${
                         index % 2 === 1 ? "lg:order-2" : ""
                       }`}
                     >
-                      <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-sky-500/10 blur-[90px]" />
+                      <Image
+                        src={service.image}
+                        alt={service.title}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 45vw"
+                        className="object-cover transition duration-700 hover:scale-105"
+                      />
 
-                      <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#020817] via-[#020817]/70 to-[#020817]/20" />
+
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#020817]/50 to-transparent" />
+
+                      <div className="tech-grid absolute inset-0 opacity-20" />
+
+                      {/* CONTENT */}
+
+                      <div className="absolute inset-0 flex flex-col justify-end p-7 sm:p-9 lg:p-12">
                         <div className="flex items-center justify-between">
-                          <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-sky-400/20 bg-sky-400/10 text-sky-400">
+                          <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-[#020817]/80 text-sky-400 backdrop-blur-xl">
                             <Icon size={27} />
                           </div>
 
-                          <span className="text-5xl font-black text-white/[0.04] sm:text-7xl">
+                          <span className="text-6xl font-black text-white/10">
                             {service.number}
                           </span>
                         </div>
 
-                        <h3 className="mt-8 text-2xl font-black text-white sm:text-3xl">
+                        <h3 className="mt-7 text-2xl font-black text-white sm:text-3xl">
                           {service.title}
                         </h3>
 
-                        <p className="mt-5 max-w-xl text-sm leading-7 text-slate-400 sm:text-base">
+                        <p className="mt-4 max-w-xl text-sm leading-7 text-slate-300 sm:text-base">
                           {service.description}
                         </p>
 
                         <Link
                           href={`/contact?service=${service.id}`}
-                          className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-sky-400 transition hover:text-sky-300"
+                          className="mt-7 inline-flex w-fit items-center gap-2 rounded-lg border border-white/15 bg-[#020817]/70 px-5 py-3 text-sm font-semibold text-sky-400 backdrop-blur-xl transition hover:border-sky-400/30 hover:bg-[#020817]"
                         >
                           Request This Service
                           <ArrowRight size={16} />
@@ -187,7 +206,9 @@ export default function ServicesPage() {
                       </div>
                     </div>
 
-                    {/* SERVICE CAPABILITIES */}
+                    {/* =====================================
+                        CAPABILITIES
+                    ===================================== */}
 
                     <div
                       className={`border-t border-white/10 bg-[#0b1d31]/70 p-7 sm:p-9 lg:border-t-0 lg:border-l lg:p-12 ${
@@ -226,13 +247,13 @@ export default function ServicesPage() {
       </section>
 
       {/* =====================================================
-          FIBER / GIS FEATURE
+          GIS + FIBER
       ===================================================== */}
 
       <section className="border-y border-white/10 bg-[#020817] py-20 sm:py-24">
         <div className="site-container">
           <div className="grid items-center gap-12 lg:grid-cols-2">
-            {/* TECHNICAL GRAPHIC */}
+            {/* NETWORK GRAPHIC */}
 
             <div className="tech-grid relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10 bg-[#071525]">
               <div className="absolute left-[8%] top-[14%] rounded-xl border border-sky-400/30 bg-[#020817] px-4 py-3">
@@ -332,7 +353,7 @@ export default function ServicesPage() {
               </div>
 
               <Link
-                href="/contact"
+                href="/contact?service=fiber"
                 className="mt-9 inline-flex items-center gap-2 rounded-lg bg-sky-500 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-sky-400"
               >
                 Start a Fiber Project

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import {
@@ -11,10 +12,10 @@ import {
   Zap,
 } from "lucide-react";
 
+import CTASection from "@/components/CTASection";
+import InfrastructureSection from "@/components/InfrastructureSection";
 import ServicesSection from "@/components/ServicesSection";
 import StatsSection from "@/components/StatsSection";
-import InfrastructureSection from "@/components/InfrastructureSection";
-import CTASection from "@/components/CTASection";
 
 const heroCapabilities = [
   {
@@ -51,17 +52,21 @@ export default function Home() {
       ===================================================== */}
 
       <section className="tech-grid relative min-h-[calc(100vh-80px)] overflow-hidden">
-        {/* Background glow */}
+        {/* BACKGROUND GLOWS */}
+
         <div className="pointer-events-none absolute -left-40 top-10 h-[500px] w-[500px] rounded-full bg-blue-600/10 blur-[140px]" />
 
         <div className="pointer-events-none absolute -right-40 top-20 h-[550px] w-[550px] rounded-full bg-sky-500/10 blur-[150px]" />
 
         <div className="site-container relative">
           <div className="grid min-h-[calc(100vh-80px)] items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-20">
-            {/* LEFT */}
+            {/* ===============================================
+                LEFT CONTENT
+            =============================================== */}
+
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-sky-400/20 bg-sky-400/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-sky-400 sm:text-xs">
-                <span className="h-2 w-2 rounded-full bg-sky-400" />
+                <span className="network-pulse h-2 w-2 rounded-full bg-sky-400" />
                 Smart Infrastructure Solutions
               </div>
 
@@ -78,6 +83,8 @@ export default function Home() {
                 and renewable-energy solutions designed for smarter, safer and
                 more connected infrastructure.
               </p>
+
+              {/* BUTTONS */}
 
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <Link
@@ -96,7 +103,8 @@ export default function Home() {
                 </Link>
               </div>
 
-              {/* Capabilities */}
+              {/* CAPABILITIES */}
+
               <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {heroCapabilities.map((item) => {
                   const Icon = item.icon;
@@ -104,7 +112,7 @@ export default function Home() {
                   return (
                     <div
                       key={item.label}
-                      className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3"
+                      className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3 transition hover:border-sky-400/20 hover:bg-sky-400/[0.04]"
                     >
                       <Icon size={18} className="shrink-0 text-sky-400" />
 
@@ -117,77 +125,109 @@ export default function Home() {
               </div>
             </div>
 
-            {/* RIGHT VISUAL */}
+            {/* ===============================================
+                RIGHT HERO IMAGE
+            =============================================== */}
+
             <div className="relative hidden lg:block">
-              <div className="relative mx-auto aspect-square max-w-[550px]">
-                {/* Rings */}
-                <div className="absolute inset-[8%] rounded-full border border-sky-400/10" />
-                <div className="absolute inset-[22%] rounded-full border border-sky-400/20" />
-                <div className="absolute inset-[36%] rounded-full border border-sky-400/30" />
+              <div className="relative mx-auto aspect-[4/5] max-w-[520px]">
+                {/* IMAGE */}
 
-                {/* Center */}
-                <div className="absolute left-1/2 top-1/2 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-sky-400/30 bg-[#071525] text-sky-400 shadow-[0_0_80px_rgba(14,165,233,0.2)]">
-                  <RadioTower size={43} />
-                </div>
-
-                {/* Network lines */}
-                <svg
-                  className="absolute inset-0 h-full w-full"
-                  viewBox="0 0 500 500"
-                  fill="none"
-                >
-                  <line
-                    x1="250"
-                    y1="250"
-                    x2="110"
-                    y2="105"
-                    stroke="#0ea5e9"
-                    strokeOpacity=".45"
+                <div className="absolute inset-0 overflow-hidden rounded-[32px] border border-white/10 bg-[#08192b] shadow-2xl shadow-black/40">
+                  <Image
+                    src="/images/hero/hero.png"
+                    alt="Smart infrastructure and technical engineering services"
+                    fill
+                    priority
+                    sizes="520px"
+                    className="object-cover"
                   />
 
-                  <line
-                    x1="250"
-                    y1="250"
-                    x2="405"
-                    y2="115"
-                    stroke="#22d3ee"
-                    strokeOpacity=".45"
-                  />
+                  {/* DARK OVERLAYS */}
 
-                  <line
-                    x1="250"
-                    y1="250"
-                    x2="425"
-                    y2="355"
-                    stroke="#0ea5e9"
-                    strokeOpacity=".45"
-                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#020817] via-[#020817]/25 to-transparent" />
 
-                  <line
-                    x1="250"
-                    y1="250"
-                    x2="100"
-                    y2="390"
-                    stroke="#22d3ee"
-                    strokeOpacity=".45"
-                  />
-                </svg>
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#06111f]/30 to-transparent" />
 
-                {/* Nodes */}
-                <div className="absolute left-[14%] top-[14%] flex h-16 w-16 items-center justify-center rounded-2xl border border-sky-400/20 bg-[#071525] text-sky-400 shadow-xl">
-                  <MapPinned size={25} />
+                  <div className="tech-grid absolute inset-0 opacity-30" />
                 </div>
 
-                <div className="absolute right-[11%] top-[16%] flex h-16 w-16 items-center justify-center rounded-2xl border border-cyan-400/20 bg-[#071525] text-cyan-400 shadow-xl">
-                  <Cable size={25} />
+                {/* OUTER BORDER */}
+
+                <div className="pointer-events-none absolute -inset-3 -z-10 rounded-[38px] border border-sky-400/10" />
+
+                {/* GIS BADGE */}
+
+                <div className="animate-float absolute -left-8 top-[3%] rounded-2xl border border-white/10 bg-[#020817]/90 p-4 shadow-xl backdrop-blur-xl">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-400/10 text-sky-400">
+                      <MapPinned size={20} />
+                    </div>
+
+                    <div>
+                      <div className="text-[9px] font-bold uppercase tracking-[0.18em] text-slate-500">
+                        Geospatial
+                      </div>
+
+                      <div className="mt-1 text-sm font-bold text-white">
+                        GIS Planning
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="absolute bottom-[15%] right-[7%] flex h-16 w-16 items-center justify-center rounded-2xl border border-sky-400/20 bg-[#071525] text-sky-400 shadow-xl">
-                  <Camera size={25} />
+                {/* FIBER BADGE */}
+
+                <div className="animate-float absolute -left-8 top-[50%] rounded-2xl border border-white/10 bg-[#020817]/90 p-4 shadow-xl backdrop-blur-xl">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-400/10 text-cyan-400">
+                      <Cable size={20} />
+                    </div>
+
+                    <div>
+                      <div className="text-[9px] font-bold uppercase tracking-[0.18em] text-slate-500">
+                        Telecom
+                      </div>
+
+                      <div className="mt-1 text-sm font-bold text-white">
+                        FTTH / GPON
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="absolute bottom-[9%] left-[12%] flex h-16 w-16 items-center justify-center rounded-2xl border border-cyan-400/20 bg-[#071525] text-cyan-400 shadow-xl">
-                  <PanelsTopLeft size={25} />
+                {/* BOTTOM PANEL */}
+
+                <div className="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/10 bg-[#020817]/85 p-5 backdrop-blur-xl">
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-sky-400">
+                        UnifiedTechnicalServices
+                      </div>
+
+                      <div className="mt-2 text-sm font-bold text-white">
+                        Digital Planning → Field Implementation
+                      </div>
+                    </div>
+
+                    <RadioTower size={25} className="shrink-0 text-sky-400" />
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-4 gap-2">
+                    {["Survey", "Plan", "Build", "Sustain"].map(
+                      (item, index) => (
+                        <div key={item} className="text-center">
+                          <div className="mx-auto flex h-6 w-6 items-center justify-center rounded-full border border-sky-400/20 bg-sky-400/10 text-[9px] font-bold text-sky-400">
+                            {index + 1}
+                          </div>
+
+                          <div className="mt-1.5 text-[9px] font-medium text-slate-400">
+                            {item}
+                          </div>
+                        </div>
+                      ),
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -196,26 +236,14 @@ export default function Home() {
       </section>
 
       {/* =====================================================
-          EXPERTISE STRIP
+          OTHER HOME SECTIONS
       ===================================================== */}
 
       <StatsSection />
 
-      {/* =====================================================
-          SERVICES
-      ===================================================== */}
-
       <ServicesSection />
 
-      {/* =====================================================
-          DIGITAL → PHYSICAL
-      ===================================================== */}
-
       <InfrastructureSection />
-
-      {/* =====================================================
-          CTA
-      ===================================================== */}
 
       <CTASection />
     </main>
