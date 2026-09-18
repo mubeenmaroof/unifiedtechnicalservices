@@ -30,6 +30,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
@@ -39,6 +40,7 @@ body {
   color: var(--foreground);
 
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  overflow-x: clip;
 }
 
 ::selection {
@@ -74,7 +76,7 @@ a {
 
   margin-inline: auto;
 
-  padding-inline: 1rem;
+  padding-inline: clamp(1rem, 4vw, 2rem);
 }
 
 @media (min-width: 640px) {
@@ -87,6 +89,19 @@ a {
   .site-container {
     padding-inline: 2rem;
   }
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+input,
+select,
+textarea {
+  max-width: 100%;
 }
 
 /* =====================================================

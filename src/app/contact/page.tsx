@@ -86,7 +86,7 @@ export default function ContactPage() {
 
             {/* TITLE */}
 
-            <h1 className="mt-7 text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
+            <h1 className="mt-7 text-3xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
               Let&apos;s Build <span className="text-sky-400">Smarter</span>{" "}
               Infrastructure.
             </h1>
@@ -199,7 +199,10 @@ export default function ContactPage() {
           PROJECT INQUIRY
       ================================================= */}
 
-      <section className="relative py-20 sm:py-24 lg:py-28">
+      <section
+        id="inquiry-form"
+        className="relative scroll-mt-20 py-20 sm:py-24 lg:py-28"
+      >
         {/* BACKGROUND */}
 
         <div className="tech-grid pointer-events-none absolute inset-0 opacity-30" />

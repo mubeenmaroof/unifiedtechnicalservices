@@ -18,7 +18,7 @@ export default function FloatingContact() {
   const whatsappAvailable = Boolean(siteConfig.contact.whatsapp);
 
   return (
-    <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3 sm:bottom-7 sm:right-7">
+    <div className="fixed bottom-[max(0.75rem,env(safe-area-inset-bottom))] right-[max(0.75rem,env(safe-area-inset-right))] z-[60] flex flex-col items-end gap-3 sm:bottom-7 sm:right-7">
       {/* CONTACT PANEL */}
 
       <div
@@ -28,7 +28,7 @@ export default function FloatingContact() {
             : "pointer-events-none translate-y-3 scale-95 opacity-0"
         }`}
       >
-        <div className="w-[280px] p-4">
+        <div className="w-[min(280px,calc(100vw-1.5rem))] p-4">
           <div className="px-2 pb-3">
             <div className="text-sm font-bold text-white">Contact Us</div>
 

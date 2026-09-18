@@ -163,7 +163,7 @@ export default function AboutPage() {
             About UnifiedTechnicalServices
           </div>
 
-          <h1 className="mx-auto mt-6 max-w-4xl text-4xl font-black tracking-[-0.04em] text-white sm:text-5xl lg:text-6xl">
+          <h1 className="mx-auto mt-6 max-w-4xl text-3xl font-black tracking-[-0.03em] text-white sm:text-5xl lg:text-6xl">
             Engineering Smarter
             <span className="text-sky-400"> Infrastructure</span>
           </h1>

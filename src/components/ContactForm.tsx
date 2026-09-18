@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useSearchParams } from "next/navigation";
 
@@ -83,6 +83,23 @@ export default function ContactForm() {
    * event handler, never during render.
    */
   const [formStartedAt, setFormStartedAt] = useState<number | null>(null);
+
+  useEffect(() => {
+    const focusInquiry = () => {
+      if (window.location.hash !== "#inquiry-form") {
+        return;
+      }
+
+      window.requestAnimationFrame(() => {
+        document.getElementById("fullName")?.focus();
+      });
+    };
+
+    focusInquiry();
+    window.addEventListener("hashchange", focusInquiry);
+
+    return () => window.removeEventListener("hashchange", focusInquiry);
+  }, []);
 
   /* ===================================================
      DEFAULT SERVICE
@@ -484,7 +501,7 @@ export default function ContactForm() {
           FORM FIELDS
       ============================================= */}
 
-      <div className="mt-7 grid gap-5 sm:grid-cols-2">
+      <div className="mt-7 grid min-w-0 gap-5 sm:grid-cols-2">
         {/* FULL NAME */}
 
         <div>

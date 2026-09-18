@@ -68,7 +68,7 @@ export default function ServicesPage() {
             Our Expertise
           </div>
 
-          <h1 className="mx-auto mt-6 max-w-4xl text-4xl font-black tracking-[-0.04em] text-white sm:text-5xl lg:text-6xl">
+          <h1 className="mx-auto mt-6 max-w-4xl text-3xl font-black tracking-[-0.03em] text-white sm:text-5xl lg:text-6xl">
             Comprehensive Solutions for a
             <span className="text-sky-400"> Connected Future</span>
           </h1>
@@ -157,7 +157,7 @@ export default function ServicesPage() {
                     ===================================== */}
 
                     <div
-                      className={`relative min-h-[430px] overflow-hidden ${
+                      className={`relative min-h-[320px] overflow-hidden sm:min-h-[430px] ${
                         index % 2 === 1 ? "lg:order-2" : ""
                       }`}
                     >

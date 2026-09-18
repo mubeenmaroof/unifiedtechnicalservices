@@ -290,7 +290,7 @@ export default function Footer() {
             </div>
 
             <Link
-              href="/contact"
+              href="/contact#inquiry-form"
               className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-sky-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-400 hover:shadow-lg hover:shadow-sky-500/20"
             >
               Get a Quote

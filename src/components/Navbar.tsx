@@ -79,78 +79,86 @@ export default function Navbar() {
   }, [mobileMenuOpen]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#020817]/90 backdrop-blur-xl">
-      {/* =================================================
+    <>
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#020817]/90 backdrop-blur-xl">
+        {/* =================================================
           MAIN NAVBAR
       ================================================= */}
 
-      <div className="site-container">
-        <div className="flex h-20 items-center justify-between">
-          {/* =============================================
+        <div className="site-container">
+          <div className="flex h-16 items-center justify-between sm:h-20">
+            {/* =============================================
               BRAND
           ============================================= */}
 
-          <div onClick={closeMobileMenu} className="min-w-0">
-            <BrandLogo />
-          </div>
+            <div onClick={closeMobileMenu} className="min-w-0">
+              <BrandLogo />
+            </div>
 
-          {/* =============================================
+            {/* =============================================
               DESKTOP NAVIGATION
           ============================================= */}
 
-          <nav className="hidden items-center gap-8 lg:flex">
-            {navLinks.map((link) => {
-              const active = isActive(link.href);
+            <nav className="hidden items-center gap-8 lg:flex">
+              {navLinks.map((link) => {
+                const active = isActive(link.href);
 
-              return (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`relative py-2 text-sm font-medium transition-colors ${
-                    active ? "text-sky-400" : "text-slate-300 hover:text-white"
-                  }`}
-                >
-                  {link.name}
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={`relative py-2 text-sm font-medium transition-colors ${
+                      active
+                        ? "text-sky-400"
+                        : "text-slate-300 hover:text-white"
+                    }`}
+                  >
+                    {link.name}
 
-                  {/* ACTIVE INDICATOR */}
+                    {/* ACTIVE INDICATOR */}
 
-                  {active && (
-                    <span className="absolute -bottom-1 left-0 h-0.5 w-full rounded-full bg-sky-400" />
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
+                    {active && (
+                      <span className="absolute -bottom-1 left-0 h-0.5 w-full rounded-full bg-sky-400" />
+                    )}
+                  </Link>
+                );
+              })}
+            </nav>
 
-          {/* =============================================
+            {/* =============================================
               DESKTOP CTA
           ============================================= */}
 
-          <div className="hidden lg:block">
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-sky-400 hover:shadow-lg hover:shadow-sky-500/20"
-            >
-              Get a Quote
-            </Link>
-          </div>
+            <div className="hidden lg:block">
+              <Link
+                href="/contact#inquiry-form"
+                className="inline-flex items-center justify-center rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-sky-400 hover:shadow-lg hover:shadow-sky-500/20"
+              >
+                Get a Quote
+              </Link>
+            </div>
 
-          {/* =============================================
+            {/* =============================================
               MOBILE MENU BUTTON
           ============================================= */}
 
-          <button
-            type="button"
-            aria-label={mobileMenuOpen ? "Close navigation" : "Open navigation"}
-            aria-expanded={mobileMenuOpen}
-            aria-controls="mobile-navigation"
-            onClick={() => setMobileMenuOpen((previous) => !previous)}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:border-sky-400/20 hover:bg-white/10 lg:hidden"
-          >
-            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+            <button
+              type="button"
+              aria-label={
+                mobileMenuOpen ? "Close navigation" : "Open navigation"
+              }
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-navigation"
+              onClick={() => setMobileMenuOpen((previous) => !previous)}
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:border-sky-400/20 hover:bg-white/10 lg:hidden"
+            >
+              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
-      </div>
+      </header>
+
+      <div aria-hidden="true" className="h-16 sm:h-20" />
 
       {/* =================================================
           MOBILE NAVIGATION
@@ -158,10 +166,10 @@ export default function Navbar() {
 
       <div
         id="mobile-navigation"
-        className={`overflow-hidden border-white/10 bg-[#020817] transition-all duration-300 lg:hidden ${
+        className={`fixed inset-x-0 top-16 z-40 max-h-[calc(100dvh-4rem)] overflow-y-auto border-white/10 bg-[#020817] transition-all duration-300 sm:top-20 sm:max-h-[calc(100dvh-5rem)] lg:hidden ${
           mobileMenuOpen
-            ? "max-h-[600px] border-t opacity-100"
-            : "max-h-0 opacity-0"
+            ? "pointer-events-auto border-t opacity-100"
+            : "pointer-events-none !max-h-0 opacity-0"
         }`}
       >
         <nav className="site-container flex flex-col py-5">
@@ -195,7 +203,7 @@ export default function Navbar() {
           {/* MOBILE CTA */}
 
           <Link
-            href="/contact"
+            href="/contact#inquiry-form"
             onClick={closeMobileMenu}
             className="mt-4 flex items-center justify-center rounded-lg bg-sky-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-400"
           >
@@ -209,6 +217,6 @@ export default function Navbar() {
           </div>
         </nav>
       </div>
-    </header>
+    </>
   );
 }

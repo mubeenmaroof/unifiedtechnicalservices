@@ -70,7 +70,7 @@ export default function Home() {
                 Smart Infrastructure Solutions
               </div>
 
-              <h1 className="mt-7 max-w-3xl text-4xl font-black leading-[1.05] tracking-[-0.04em] text-white sm:text-5xl md:text-6xl xl:text-7xl">
+              <h1 className="mt-7 max-w-3xl text-3xl font-black leading-[1.08] tracking-[-0.03em] text-white sm:text-5xl md:text-6xl xl:text-7xl">
                 Engineering
                 <span className="text-sky-400"> Connections.</span>
                 <br />
@@ -96,7 +96,7 @@ export default function Home() {
                 </Link>
 
                 <Link
-                  href="/contact"
+                  href="/contact#inquiry-form"
                   className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
                 >
                   Contact Us
@@ -129,8 +129,8 @@ export default function Home() {
                 RIGHT HERO IMAGE
             =============================================== */}
 
-            <div className="relative hidden lg:block">
-              <div className="relative mx-auto aspect-[4/5] max-w-[520px]">
+            <div className="relative order-first mt-2 block lg:order-none lg:mt-0">
+              <div className="relative mx-auto aspect-[4/5] w-full max-w-[520px]">
                 {/* IMAGE */}
 
                 <div className="absolute inset-0 overflow-hidden rounded-[32px] border border-white/10 bg-[#08192b] shadow-2xl shadow-black/40">
@@ -158,7 +158,7 @@ export default function Home() {
 
                 {/* GIS BADGE */}
 
-                <div className="animate-float absolute -left-8 top-[3%] rounded-2xl border border-white/10 bg-[#020817]/90 p-4 shadow-xl backdrop-blur-xl">
+                <div className="animate-float absolute left-2 top-[3%] rounded-2xl border border-white/10 bg-[#020817]/90 p-3 shadow-xl backdrop-blur-xl sm:-left-8 sm:p-4">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-400/10 text-sky-400">
                       <MapPinned size={20} />
@@ -178,7 +178,7 @@ export default function Home() {
 
                 {/* FIBER BADGE */}
 
-                <div className="animate-float absolute -left-8 top-[50%] rounded-2xl border border-white/10 bg-[#020817]/90 p-4 shadow-xl backdrop-blur-xl">
+                <div className="animate-float absolute left-2 top-[50%] rounded-2xl border border-white/10 bg-[#020817]/90 p-3 shadow-xl backdrop-blur-xl sm:-left-8 sm:p-4">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-400/10 text-cyan-400">
                       <Cable size={20} />
@@ -198,7 +198,7 @@ export default function Home() {
 
                 {/* BOTTOM PANEL */}
 
-                <div className="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/10 bg-[#020817]/85 p-5 backdrop-blur-xl">
+                <div className="absolute bottom-3 left-3 right-3 rounded-2xl border border-white/10 bg-[#020817]/85 p-4 backdrop-blur-xl sm:bottom-5 sm:left-5 sm:right-5 sm:p-5">
                   <div className="flex items-center justify-between gap-4">
                     <div>
                       <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-sky-400">

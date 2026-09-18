@@ -14,7 +14,7 @@ export default function BrandLogo({
   return (
     <Link
       href="/"
-      className="group inline-flex items-center gap-3"
+      className="group inline-flex min-w-0 items-center gap-2 sm:gap-3"
       aria-label="Unified Technical Services home"
     >
       {/* LOGO MARK */}
@@ -45,10 +45,10 @@ export default function BrandLogo({
 
       <div className="min-w-0 leading-tight">
         <div
-          className={`whitespace-nowrap font-bold tracking-tight text-white ${
+          className={`font-bold tracking-tight text-white ${
             compact
-              ? "text-[13px] min-[380px]:text-[14px]"
-              : "text-[13px] min-[380px]:text-[15px] sm:text-lg"
+              ? "text-[12px] min-[380px]:text-[14px]"
+              : "text-[12px] min-[380px]:text-[15px] sm:text-lg"
           }`}
         >
           Unified

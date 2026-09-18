@@ -25,7 +25,7 @@ export default function CTASection() {
 
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
-              href="/contact"
+              href="/contact#inquiry-form"
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-sky-500 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-sky-400"
             >
               Request a Consultation
