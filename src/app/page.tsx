@@ -130,7 +130,7 @@ export default function Home() {
             =============================================== */}
 
             <div className="relative order-first mt-2 block lg:order-none lg:mt-0">
-              <div className="relative mx-auto aspect-[4/5] w-full max-w-[520px]">
+              <div className="relative mx-auto aspect-[3/5] w-full max-w-[520px] sm:aspect-[4/5]">
                 {/* IMAGE */}
 
                 <div className="absolute inset-0 overflow-hidden rounded-[32px] border border-white/10 bg-[#08192b] shadow-2xl shadow-black/40">
