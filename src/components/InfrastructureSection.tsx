@@ -5,6 +5,7 @@ import { ArrowRight, Cable, CircleCheck, Map, RadioTower } from "lucide-react";
 const capabilities = [
   "GIS-based infrastructure planning",
   "Fiber route and GPON network design",
+  "CCTV & security system integration",
   "Technical drawings and as-built documentation",
   "Field implementation and installation support",
 ];

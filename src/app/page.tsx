@@ -79,9 +79,9 @@ export default function Home() {
               </h1>
 
               <p className="mt-7 max-w-2xl text-base leading-7 text-slate-400 sm:text-lg sm:leading-8">
-                Integrated GIS, fiber optic, security, electrical, fire alarm
-                and renewable-energy solutions designed for smarter, safer and
-                more connected infrastructure.
+                Integrated GIS, fiber optic, CCTV & security, electrical, fire
+                alarm and renewable-energy solutions designed for smarter, safer
+                and more connected infrastructure.
               </p>
 
               {/* BUTTONS */}
