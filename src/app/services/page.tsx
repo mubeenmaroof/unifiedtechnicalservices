@@ -197,10 +197,17 @@ export default function ServicesPage() {
                         </p>
 
                         <Link
-                          href={`/contact?service=${service.id}`}
+                          href={
+                            service.id === "cctv"
+                              ? "/services/cctv"
+                              : `/contact?service=${service.id}`
+                          }
                           className="mt-7 inline-flex w-fit items-center gap-2 rounded-lg border border-white/15 bg-[#020817]/70 px-5 py-3 text-sm font-semibold text-sky-400 backdrop-blur-xl transition hover:border-sky-400/30 hover:bg-[#020817]"
                         >
-                          Request This Service
+                          {service.id === "cctv"
+                            ? "View CCTV Packages"
+                            : "Request This Service"}
+
                           <ArrowRight size={16} />
                         </Link>
                       </div>

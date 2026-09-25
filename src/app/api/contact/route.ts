@@ -42,6 +42,17 @@ const allowedServices = [
 ];
 
 /* =====================================================
+   CCTV PACKAGES
+===================================================== */
+
+const allowedCCTVPackages = [
+  "Basic Security",
+  "Smart Security",
+  "Professional Security",
+  "Custom CCTV Solution",
+];
+
+/* =====================================================
    ALLOWED FILE TYPES
 ===================================================== */
 
@@ -121,13 +132,6 @@ export async function POST(request: NextRequest) {
     if (honeypot) {
       console.warn("Spam blocked: honeypot field filled.");
 
-      /*
-       * Fake successful response.
-       *
-       * Do not tell automated bots
-       * that they were detected.
-       */
-
       return NextResponse.json(
         {
           success: true,
@@ -162,10 +166,6 @@ export async function POST(request: NextRequest) {
 
     const submissionTime = Date.now() - formStartedAt;
 
-    /*
-     * Future timestamps are invalid.
-     */
-
     if (submissionTime < 0) {
       return NextResponse.json(
         {
@@ -177,11 +177,6 @@ export async function POST(request: NextRequest) {
         },
       );
     }
-
-    /*
-     * Extremely fast submission is
-     * treated as automated activity.
-     */
 
     if (submissionTime < 1000) {
       console.warn("Spam blocked: form submitted too quickly.");
@@ -211,6 +206,8 @@ export async function POST(request: NextRequest) {
     const email = formData.get("email")?.toString().trim().toLowerCase() ?? "";
 
     const service = formData.get("service")?.toString().trim() ?? "";
+
+    const cctvPackage = formData.get("cctvPackage")?.toString().trim() ?? "";
 
     const location = formData.get("location")?.toString().trim() ?? "";
 
@@ -259,6 +256,7 @@ export async function POST(request: NextRequest) {
       phone.length > 50 ||
       email.length > 254 ||
       service.length > 200 ||
+      cctvPackage.length > 100 ||
       location.length > 250 ||
       description.length > 10000
     ) {
@@ -308,6 +306,34 @@ export async function POST(request: NextRequest) {
     }
 
     /* ===============================================
+       CCTV PACKAGE VALIDATION
+    =============================================== */
+
+    if (cctvPackage && service !== "CCTV & Security") {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "A CCTV package can only be selected with CCTV & Security.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    if (cctvPackage && !allowedCCTVPackages.includes(cctvPackage)) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Please select a valid CCTV package.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    /* ===============================================
        FILE COUNT
     =============================================== */
 
@@ -330,8 +356,6 @@ export async function POST(request: NextRequest) {
     let totalSize = 0;
 
     for (const file of attachments) {
-      /* FILE SIZE */
-
       if (file.size > MAX_FILE_SIZE) {
         return NextResponse.json(
           {
@@ -343,8 +367,6 @@ export async function POST(request: NextRequest) {
           },
         );
       }
-
-      /* FILE EXTENSION */
 
       const extension = getExtension(file.name);
 
@@ -407,9 +429,7 @@ export async function POST(request: NextRequest) {
 
       emailAttachments.push({
         filename,
-
         content: Buffer.from(arrayBuffer),
-
         contentType: file.type || "application/octet-stream",
       });
 
@@ -430,6 +450,8 @@ export async function POST(request: NextRequest) {
 
     const safeService = escapeHtml(service);
 
+    const safeCCTVPackage = escapeHtml(cctvPackage);
+
     const safeLocation = escapeHtml(location);
 
     const safeDescription = escapeHtml(description).replace(/\n/g, "<br />");
@@ -449,16 +471,15 @@ export async function POST(request: NextRequest) {
           >
             ${attachmentNames
               .map(
-                (name) =>
-                  `
-                    <li
-                      style="
-                        margin-bottom:4px;
-                      "
-                    >
-                      ${escapeHtml(name)}
-                    </li>
-                  `,
+                (name) => `
+                  <li
+                    style="
+                      margin-bottom:4px;
+                    "
+                  >
+                    ${escapeHtml(name)}
+                  </li>
+                `,
               )
               .join("")}
           </ul>
@@ -473,16 +494,13 @@ export async function POST(request: NextRequest) {
       <!DOCTYPE html>
 
       <html>
-
         <head>
-
           <meta charset="UTF-8" />
 
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
-
         </head>
 
         <body
@@ -493,7 +511,6 @@ export async function POST(request: NextRequest) {
             font-family:Arial,Helvetica,sans-serif;
           "
         >
-
           <div
             style="
               width:100%;
@@ -501,7 +518,6 @@ export async function POST(request: NextRequest) {
               box-sizing:border-box;
             "
           >
-
             <div
               style="
                 max-width:680px;
@@ -512,10 +528,7 @@ export async function POST(request: NextRequest) {
                 border:1px solid #e2e8f0;
               "
             >
-
-              <!-- ===================================
-                   HEADER
-              ==================================== -->
+              <!-- HEADER -->
 
               <div
                 style="
@@ -523,7 +536,6 @@ export async function POST(request: NextRequest) {
                   padding:28px 30px;
                 "
               >
-
                 <div
                   style="
                     color:#38bdf8;
@@ -555,19 +567,15 @@ export async function POST(request: NextRequest) {
                 >
                   ${inquiryId}
                 </div>
-
               </div>
 
-              <!-- ===================================
-                   CONTENT
-              ==================================== -->
+              <!-- CONTENT -->
 
               <div
                 style="
                   padding:30px;
                 "
               >
-
                 <p
                   style="
                     margin-top:0;
@@ -607,6 +615,12 @@ export async function POST(request: NextRequest) {
                 ${createSectionTitle("Project Details")}
 
                 ${createRow("Service", safeService)}
+
+                ${
+                  safeCCTVPackage
+                    ? createRow("CCTV Package", safeCCTVPackage)
+                    : ""
+                }
 
                 ${createRow("Location", safeLocation || "Not provided")}
 
@@ -662,12 +676,9 @@ export async function POST(request: NextRequest) {
                 >
                   ${safeDescription}
                 </div>
-
               </div>
 
-              <!-- ===================================
-                   FOOTER
-              ==================================== -->
+              <!-- FOOTER -->
 
               <div
                 style="
@@ -679,7 +690,6 @@ export async function POST(request: NextRequest) {
                   line-height:18px;
                 "
               >
-
                 This inquiry was
                 submitted through the
                 Unified Technical
@@ -690,15 +700,10 @@ export async function POST(request: NextRequest) {
                 Reply directly to this
                 email to contact
                 ${safeName}.
-
               </div>
-
             </div>
-
           </div>
-
         </body>
-
       </html>
     `;
 
@@ -711,14 +716,11 @@ export async function POST(request: NextRequest) {
 
       to: [toEmail],
 
-      /*
-       * Clicking Reply in Gmail
-       * sends the response directly
-       * to the customer.
-       */
       replyTo: email,
 
-      subject: `[${inquiryId}] New ${service} Inquiry - ${fullName}`,
+      subject: `[${inquiryId}] New ${service}${
+        cctvPackage ? ` - ${cctvPackage}` : ""
+      } Inquiry - ${fullName}`,
 
       html,
 
@@ -749,15 +751,11 @@ export async function POST(request: NextRequest) {
 
     console.log("Inquiry successfully sent:", {
       inquiryId,
-
       emailId: data?.id,
-
       customer: email,
-
       service,
-
+      cctvPackage: cctvPackage || null,
       attachmentCount: attachments.length,
-
       attachmentNames,
     });
 
@@ -772,6 +770,10 @@ export async function POST(request: NextRequest) {
         message: "Your project inquiry has been sent successfully.",
 
         inquiryId,
+
+        service,
+
+        cctvPackage: cctvPackage || null,
 
         attachmentCount: attachments.length,
       },
@@ -829,7 +831,6 @@ function createRow(label: string, value: string) {
         padding:10px 0;
       "
     >
-
       <div
         style="
           width:140px;
@@ -851,7 +852,6 @@ function createRow(label: string, value: string) {
       >
         ${value}
       </div>
-
     </div>
   `;
 }

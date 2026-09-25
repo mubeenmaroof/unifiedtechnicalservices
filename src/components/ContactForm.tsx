@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import { useSearchParams } from "next/navigation";
 
@@ -12,8 +12,11 @@ import {
   FileUp,
   LoaderCircle,
   Send,
+  ShieldCheck,
   X,
 } from "lucide-react";
+
+import { cctvPackageMap } from "@/data/cctvPackages";
 
 /* =====================================================
    SERVICES
@@ -76,43 +79,26 @@ export default function ContactForm() {
 
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-  /*
-   * Starts as null.
-   *
-   * Date.now() is only called from an
-   * event handler, never during render.
-   */
   const [formStartedAt, setFormStartedAt] = useState<number | null>(null);
 
-  useEffect(() => {
-    const focusInquiry = () => {
-      if (window.location.hash !== "#inquiry-form") {
-        return;
-      }
-
-      window.requestAnimationFrame(() => {
-        document.getElementById("fullName")?.focus();
-      });
-    };
-
-    focusInquiry();
-    window.addEventListener("hashchange", focusInquiry);
-
-    return () => window.removeEventListener("hashchange", focusInquiry);
-  }, []);
-
   /* ===================================================
-     DEFAULT SERVICE
+     URL PARAMETERS
   =================================================== */
 
   const requestedService = searchParams.get("service");
+
+  const requestedPackage = searchParams.get("package");
 
   const defaultService = requestedService
     ? (serviceMap[requestedService] ?? "")
     : "";
 
+  const selectedCCTVPackage = requestedPackage
+    ? (cctvPackageMap[requestedPackage] ?? "")
+    : "";
+
   /* ===================================================
-     START FORM TIMER
+     START TIMER
   =================================================== */
 
   const startFormTimer = () => {
@@ -120,7 +106,7 @@ export default function ContactForm() {
   };
 
   /* ===================================================
-     FILE IDENTIFIER
+     FILE KEY
   =================================================== */
 
   const getFileKey = (file: File) =>
@@ -131,10 +117,6 @@ export default function ContactForm() {
   =================================================== */
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    /*
-     * File selection itself is
-     * user interaction.
-     */
     startFormTimer();
 
     setError("");
@@ -144,10 +126,6 @@ export default function ContactForm() {
     if (incomingFiles.length === 0) {
       return;
     }
-
-    /* ===============================================
-       INDIVIDUAL FILE SIZE
-    =============================================== */
 
     const oversizedFile = incomingFiles.find(
       (file) => file.size > MAX_FILE_SIZE,
@@ -161,10 +139,6 @@ export default function ContactForm() {
       return;
     }
 
-    /* ===============================================
-       REMOVE DUPLICATES
-    =============================================== */
-
     const existingKeys = new Set(selectedFiles.map(getFileKey));
 
     const uniqueNewFiles = incomingFiles.filter(
@@ -173,10 +147,6 @@ export default function ContactForm() {
 
     const combinedFiles = [...selectedFiles, ...uniqueNewFiles];
 
-    /* ===============================================
-       MAXIMUM FILE COUNT
-    =============================================== */
-
     if (combinedFiles.length > MAX_FILES) {
       event.target.value = "";
 
@@ -184,10 +154,6 @@ export default function ContactForm() {
 
       return;
     }
-
-    /* ===============================================
-       TOTAL FILE SIZE
-    =============================================== */
 
     const totalSize = combinedFiles.reduce(
       (total, file) => total + file.size,
@@ -204,18 +170,11 @@ export default function ContactForm() {
 
     setSelectedFiles(combinedFiles);
 
-    /*
-     * Clear the native input after
-     * copying the files into state.
-     *
-     * This lets the visitor select
-     * additional files later.
-     */
     event.target.value = "";
   };
 
   /* ===================================================
-     REMOVE ONE FILE
+     REMOVE FILE
   =================================================== */
 
   const removeFile = (fileKey: string) => {
@@ -227,7 +186,7 @@ export default function ContactForm() {
   };
 
   /* ===================================================
-     REMOVE ALL FILES
+     REMOVE ALL
   =================================================== */
 
   const removeAllFiles = () => {
@@ -240,17 +199,13 @@ export default function ContactForm() {
     setError("");
   };
 
-  /* ===================================================
-     TOTAL FILE SIZE
-  =================================================== */
-
   const totalFileSize = selectedFiles.reduce(
     (total, file) => total + file.size,
     0,
   );
 
   /* ===================================================
-     SUBMIT FORM
+     SUBMIT
   =================================================== */
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -264,32 +219,23 @@ export default function ContactForm() {
     setError("");
 
     try {
-      /* =============================================
-         CREATE FORM DATA
-      ============================================= */
-
       const formData = new FormData(event.currentTarget);
 
-      /* =============================================
-         ANTI-SPAM TIMESTAMP
-      ============================================= */
+      /* TIMESTAMP */
 
-      /*
-       * Normally formStartedAt was set
-       * when the visitor first interacted
-       * with the form.
-       *
-       * Date.now() here is inside an event
-       * handler, so React purity rules are
-       * satisfied.
-       */
       const startedAt = formStartedAt ?? Date.now();
 
       formData.set("formStartedAt", String(startedAt));
 
-      /* =============================================
-         MULTIPLE ATTACHMENTS
-      ============================================= */
+      /* CCTV PACKAGE */
+
+      if (selectedCCTVPackage) {
+        formData.set("cctvPackage", selectedCCTVPackage);
+      } else {
+        formData.delete("cctvPackage");
+      }
+
+      /* ATTACHMENTS */
 
       formData.delete("attachments");
 
@@ -297,29 +243,16 @@ export default function ContactForm() {
         formData.append("attachments", file, file.name);
       });
 
-      /* =============================================
-         SEND TO API
-      ============================================= */
-
       const response = await fetch("/api/contact", {
         method: "POST",
-
         body: formData,
       });
-
-      /* =============================================
-         READ RESPONSE
-      ============================================= */
 
       const data = await response.json();
 
       if (!response.ok) {
         throw new Error(data.message || "Unable to submit inquiry.");
       }
-
-      /* =============================================
-         SUCCESS
-      ============================================= */
 
       setInquiryId(data.inquiryId ?? "");
 
@@ -348,43 +281,39 @@ export default function ContactForm() {
   };
 
   /* ===================================================
-     SUCCESS SCREEN
+     SUCCESS
   =================================================== */
 
   if (submitted) {
     return (
       <div className="flex min-h-[540px] flex-col items-center justify-center rounded-3xl border border-sky-400/20 bg-[#08192b] p-8 text-center shadow-2xl shadow-black/20">
-        {/* ICON */}
-
         <div className="flex h-16 w-16 items-center justify-center rounded-full border border-sky-400/20 bg-sky-400/10 text-sky-400">
           <CheckCircle2 size={32} />
         </div>
-
-        {/* LABEL */}
 
         <div className="mt-6 text-xs font-bold uppercase tracking-[0.2em] text-sky-400">
           Inquiry Received
         </div>
 
-        {/* TITLE */}
-
         <h2 className="mt-3 text-2xl font-black text-white sm:text-3xl">
           Thank You
         </h2>
-
-        {/* MESSAGE */}
 
         <p className="mt-4 max-w-md text-sm leading-7 text-slate-400">
           Your project inquiry has been successfully sent to Unified Technical
           Services.
         </p>
 
-        <p className="mt-2 max-w-md text-xs leading-6 text-slate-500">
-          Our team will review your requirements and contact you using the
-          information you provided.
-        </p>
+        {selectedCCTVPackage && (
+          <div className="mt-5 flex items-center gap-2 rounded-xl border border-sky-400/20 bg-sky-400/[0.06] px-4 py-3">
+            <ShieldCheck size={16} className="text-sky-400" />
 
-        {/* INQUIRY REFERENCE */}
+            <span className="text-xs text-slate-300">
+              CCTV Package:{" "}
+              <strong className="text-white">{selectedCCTVPackage}</strong>
+            </span>
+          </div>
+        )}
 
         {inquiryId && (
           <div className="mt-6 rounded-xl border border-white/10 bg-[#020817]/60 px-5 py-3">
@@ -397,8 +326,6 @@ export default function ContactForm() {
             </div>
           </div>
         )}
-
-        {/* SUBMIT ANOTHER */}
 
         <button
           type="button"
@@ -434,9 +361,7 @@ export default function ContactForm() {
       encType="multipart/form-data"
       className="relative rounded-3xl border border-white/10 bg-[#08192b] p-5 shadow-2xl shadow-black/20 sm:p-7 lg:p-9"
     >
-      {/* =============================================
-          ANTI-SPAM HONEYPOT
-      ============================================= */}
+      {/* HONEYPOT */}
 
       <div
         aria-hidden="true"
@@ -453,19 +378,7 @@ export default function ContactForm() {
         />
       </div>
 
-      {/* =============================================
-          IMPORTANT
-
-          There is intentionally NO hidden
-          formStartedAt input here.
-
-          It is appended to FormData inside
-          handleSubmit().
-      ============================================= */}
-
-      {/* =============================================
-          HEADER
-      ============================================= */}
+      {/* HEADER */}
 
       <div className="border-b border-white/10 pb-7">
         <div className="text-xs font-bold uppercase tracking-[0.2em] text-sky-400">
@@ -480,11 +393,29 @@ export default function ContactForm() {
           Tell us about your project requirements and the technical services you
           need.
         </p>
+
+        {/* SELECTED CCTV PACKAGE */}
+
+        {selectedCCTVPackage && (
+          <div className="mt-5 flex items-start gap-3 rounded-xl border border-sky-400/20 bg-sky-400/[0.06] p-4">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sky-400/10 text-sky-400">
+              <ShieldCheck size={18} />
+            </div>
+
+            <div>
+              <div className="text-[9px] font-bold uppercase tracking-[0.16em] text-sky-400">
+                Selected CCTV Package
+              </div>
+
+              <div className="mt-1 text-sm font-bold text-white">
+                {selectedCCTVPackage}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* =============================================
-          ERROR
-      ============================================= */}
+      {/* ERROR */}
 
       {error && (
         <div
@@ -497,12 +428,8 @@ export default function ContactForm() {
         </div>
       )}
 
-      {/* =============================================
-          FORM FIELDS
-      ============================================= */}
-
-      <div className="mt-7 grid min-w-0 gap-5 sm:grid-cols-2">
-        {/* FULL NAME */}
+      <div className="mt-7 grid gap-5 sm:grid-cols-2">
+        {/* NAME */}
 
         <div>
           <label
@@ -619,9 +546,30 @@ export default function ContactForm() {
           </select>
         </div>
 
-        {/* PROJECT LOCATION */}
+        {/* CCTV PACKAGE */}
 
-        <div>
+        {selectedCCTVPackage && (
+          <div>
+            <label
+              htmlFor="cctvPackageDisplay"
+              className="mb-2 block text-xs font-semibold text-slate-300"
+            >
+              CCTV Package
+            </label>
+
+            <input
+              id="cctvPackageDisplay"
+              type="text"
+              value={selectedCCTVPackage}
+              readOnly
+              className="w-full cursor-default rounded-xl border border-sky-400/20 bg-sky-400/[0.05] px-4 py-3.5 text-sm font-semibold text-sky-300 outline-none"
+            />
+          </div>
+        )}
+
+        {/* LOCATION */}
+
+        <div className={selectedCCTVPackage ? "sm:col-span-2" : ""}>
           <label
             htmlFor="location"
             className="mb-2 block text-xs font-semibold text-slate-300"
@@ -639,7 +587,7 @@ export default function ContactForm() {
           />
         </div>
 
-        {/* PROJECT DESCRIPTION */}
+        {/* DESCRIPTION */}
 
         <div className="sm:col-span-2">
           <label
@@ -660,9 +608,7 @@ export default function ContactForm() {
           />
         </div>
 
-        {/* =========================================
-            MULTIPLE ATTACHMENTS
-        ========================================= */}
+        {/* ATTACHMENTS */}
 
         <div className="sm:col-span-2">
           <div className="mb-2 flex items-center justify-between">
@@ -678,8 +624,6 @@ export default function ContactForm() {
             )}
           </div>
 
-          {/* FILE INPUT */}
-
           <input
             ref={fileInputRef}
             id="attachments"
@@ -690,8 +634,6 @@ export default function ContactForm() {
             onChange={handleFileChange}
             accept=".pdf,.doc,.docx,.xls,.xlsx,.zip,.rar,.kml,.kmz"
           />
-
-          {/* UPLOAD AREA */}
 
           <label
             htmlFor="attachments"
@@ -716,14 +658,8 @@ export default function ContactForm() {
             </span>
           </label>
 
-          {/* =======================================
-              SELECTED FILE LIST
-          ======================================= */}
-
           {selectedFiles.length > 0 && (
             <div className="mt-4 overflow-hidden rounded-xl border border-white/10 bg-[#020817]/40">
-              {/* HEADER */}
-
               <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
                 <div>
                   <div className="text-xs font-bold text-slate-300">
@@ -744,8 +680,6 @@ export default function ContactForm() {
                 </button>
               </div>
 
-              {/* FILES */}
-
               <div className="divide-y divide-white/[0.06]">
                 {selectedFiles.map((file, index) => {
                   const fileKey = getFileKey(file);
@@ -755,8 +689,6 @@ export default function ContactForm() {
                       key={fileKey}
                       className="flex items-center justify-between gap-4 px-4 py-3"
                     >
-                      {/* FILE INFO */}
-
                       <div className="flex min-w-0 items-center gap-3">
                         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sky-400/10 text-sky-400">
                           <FileText size={17} />
@@ -772,8 +704,6 @@ export default function ContactForm() {
                           </div>
                         </div>
                       </div>
-
-                      {/* REMOVE */}
 
                       <button
                         type="button"
@@ -793,9 +723,7 @@ export default function ContactForm() {
         </div>
       </div>
 
-      {/* =============================================
-          SUBMIT BUTTON
-      ============================================= */}
+      {/* SUBMIT */}
 
       <button
         type="submit"
@@ -815,8 +743,6 @@ export default function ContactForm() {
           </>
         )}
       </button>
-
-      {/* NOTE */}
 
       <p className="mt-4 text-[11px] leading-5 text-slate-500">
         Required fields are marked with an asterisk (*). All selected project
