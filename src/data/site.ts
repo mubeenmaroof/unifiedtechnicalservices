@@ -1,6 +1,8 @@
 export const siteConfig = {
   name: "Unified Technical Services",
+
   displayName: "UnifiedTechnicalServices",
+
   shortName: "UTS",
 
   tagline: "Connect | Plan | Build | Sustain",
@@ -10,17 +12,27 @@ export const siteConfig = {
 
   contact: {
     phone: "",
-    phoneDisplay: "Add company phone number",
+    phoneDisplay: "0324-4076279",
 
     email: "",
-    emailDisplay: "Add company email",
+    emailDisplay: "mub33n143@gmail.com",
 
-    whatsapp: "",
+    whatsapp: "0324-4076279",
 
     address: "",
-    addressDisplay: "Add company office address",
+    addressDisplay: "32-Ali Block New Garden Town, Lahore",
 
-    workingHours: "Add working hours",
+    workingHours: "9:00 AM - 6:00 PM (Mon - Sat)",
+
+    /* ===============================================
+       COMPANY LOCATION
+
+       Replace these coordinates with your actual
+       company latitude and longitude.
+    =============================================== */
+
+    latitude: 31.502158,
+    longitude: 74.319366,
   },
 
   social: {

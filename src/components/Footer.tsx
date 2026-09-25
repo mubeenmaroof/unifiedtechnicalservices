@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import {
   ArrowUpRight,
-  Cable,
+  Clock3,
   Globe,
   Link2,
   Mail,
@@ -87,22 +87,24 @@ export default function Footer() {
 
   const linkedinAvailable = Boolean(siteConfig.social.linkedin);
 
+  const workingAvailable = Boolean(siteConfig.contact.workingHours);
+
   return (
     <footer className="relative overflow-hidden border-t border-white/10 bg-[#020817]">
       {/* =================================================
           BACKGROUND EFFECTS
       ================================================= */}
 
-      <div className="pointer-events-none absolute -bottom-40 left-1/2 h-96 w-[700px] -translate-x-1/2 rounded-full bg-sky-500/[0.05] blur-[120px]" />
+      <div className="pointer-events-none absolute -bottom-40 left-1/2 h-80 w-[650px] -translate-x-1/2 rounded-full bg-sky-500/[0.05] blur-[120px]" />
 
-      <div className="pointer-events-none absolute right-0 top-0 h-72 w-72 rounded-full bg-blue-600/[0.04] blur-[100px]" />
+      <div className="pointer-events-none absolute right-0 top-0 h-64 w-64 rounded-full bg-blue-600/[0.04] blur-[100px]" />
 
       {/* =================================================
           MAIN FOOTER
       ================================================= */}
 
-      <div className="site-container relative py-14 sm:py-16">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_0.7fr_1fr_1fr]">
+      <div className="site-container relative py-8 sm:py-9">
+        <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-[1.4fr_0.7fr_1fr_1fr] lg:gap-8">
           {/* =============================================
               BRAND / COMPANY INFORMATION
           ============================================= */}
@@ -110,13 +112,15 @@ export default function Footer() {
           <div>
             <BrandLogo />
 
-            <p className="mt-6 max-w-sm text-sm leading-7 text-slate-400">
+            <p className="mt-4 max-w-sm text-sm leading-6 text-slate-400">
               {siteConfig.description}
             </p>
 
-            {/* CONTACT INFORMATION */}
+            {/* ===========================================
+                CONTACT INFORMATION
+            =========================================== */}
 
-            <div className="mt-7 space-y-3">
+            <div className="mt-4 space-y-2">
               {/* PHONE */}
 
               {phoneAvailable ? (
@@ -188,6 +192,30 @@ export default function Footer() {
                   </span>
                 </div>
               )}
+
+              {/* WORKING HOURS */}
+
+              {workingAvailable ? (
+                <div className="flex items-start gap-3 text-sm text-slate-400">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-sky-400/10 text-sky-400">
+                    <Clock3 size={15} />
+                  </div>
+
+                  <span className="max-w-xs pt-1.5 leading-5">
+                    {siteConfig.contact.workingHours}
+                  </span>
+                </div>
+              ) : (
+                <div className="flex items-start gap-3 text-sm text-slate-500">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.03] text-slate-500">
+                    <Clock3 size={15} />
+                  </div>
+
+                  <span className="max-w-xs pt-1.5 leading-5">
+                    {siteConfig.contact.workingHours}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 
@@ -200,7 +228,7 @@ export default function Footer() {
               Company
             </h3>
 
-            <div className="mt-6 space-y-3">
+            <div className="mt-4 space-y-2">
               {companyLinks.map((link) => (
                 <Link
                   key={link.label}
@@ -227,7 +255,7 @@ export default function Footer() {
               Services
             </h3>
 
-            <div className="mt-6 space-y-3">
+            <div className="mt-4 space-y-2">
               {serviceLinks.map((link) => (
                 <Link
                   key={link.label}
@@ -249,7 +277,7 @@ export default function Footer() {
               Technical Expertise
             </h3>
 
-            <div className="mt-6 space-y-3">
+            <div className="mt-4 space-y-2">
               {technicalLinks.map((item) => (
                 <div
                   key={item}
@@ -263,41 +291,6 @@ export default function Footer() {
             </div>
           </div>
         </div>
-
-        {/* =================================================
-            PROJECT CTA
-        ================================================= */}
-
-        <div className="relative mt-12 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025]">
-          <div className="pointer-events-none absolute -right-20 -top-20 h-52 w-52 rounded-full bg-sky-500/[0.07] blur-[70px]" />
-
-          <div className="relative flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-            <div className="flex items-start gap-4">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-sky-400/10 bg-sky-400/10 text-sky-400">
-                <Cable size={21} />
-              </div>
-
-              <div>
-                <div className="font-bold text-white">
-                  Have a technical project?
-                </div>
-
-                <div className="mt-1 max-w-xl text-sm leading-6 text-slate-500">
-                  Tell us about your requirements, location and project scope.
-                  We&apos;ll help identify the right technical solution.
-                </div>
-              </div>
-            </div>
-
-            <Link
-              href="/contact#inquiry-form"
-              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-sky-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-400 hover:shadow-lg hover:shadow-sky-500/20"
-            >
-              Get a Quote
-              <ArrowUpRight size={16} />
-            </Link>
-          </div>
-        </div>
       </div>
 
       {/* =================================================
@@ -305,7 +298,7 @@ export default function Footer() {
       ================================================= */}
 
       <div className="relative border-t border-white/10">
-        <div className="site-container flex flex-col gap-5 py-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+        <div className="site-container flex flex-col gap-4 py-4 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
           {/* COPYRIGHT */}
 
           <div>
@@ -315,9 +308,6 @@ export default function Footer() {
           {/* RIGHT SIDE */}
 
           <div className="flex flex-wrap items-center gap-5">
-            {/* Keep these as text until the actual
-                policy pages are created. */}
-
             <span>Privacy Policy</span>
 
             <span>Terms & Conditions</span>

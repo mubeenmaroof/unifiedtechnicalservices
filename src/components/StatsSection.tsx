@@ -1,5 +1,7 @@
 import { DraftingCompass, MapPinned, Network, ShieldCheck } from "lucide-react";
 
+import { StaggerItem, StaggerReveal } from "@/components/StaggerReveal";
+
 const stats = [
   {
     icon: Network,
@@ -27,30 +29,32 @@ export default function StatsSection() {
   return (
     <section className="border-y border-white/10 bg-[#020817]">
       <div className="site-container">
-        <div className="grid grid-cols-1 divide-y divide-white/10 sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4">
+        <StaggerReveal
+          className="grid grid-cols-1 divide-y divide-white/10 sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4"
+          delay={0.1}
+        >
           {stats.map((stat) => {
             const Icon = stat.icon;
 
             return (
-              <div
-                key={stat.title}
-                className="flex items-center gap-4 px-3 py-6 sm:px-6"
-              >
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sky-400/10 text-sky-400">
-                  <Icon size={22} />
-                </div>
+              <StaggerItem key={stat.title} className="h-full">
+                <div className="flex h-full items-center gap-4 px-3 py-6 sm:px-6">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sky-400/10 text-sky-400">
+                    <Icon size={22} />
+                  </div>
 
-                <div>
-                  <div className="font-bold text-white">{stat.title}</div>
+                  <div>
+                    <div className="font-bold text-white">{stat.title}</div>
 
-                  <div className="mt-1 text-xs text-slate-500">
-                    {stat.description}
+                    <div className="mt-1 text-xs text-slate-500">
+                      {stat.description}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerReveal>
       </div>
     </section>
   );
