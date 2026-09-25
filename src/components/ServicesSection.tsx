@@ -46,6 +46,7 @@ export default function ServicesSection() {
               <ServiceCard
                 id={service.id}
                 title={service.shortTitle}
+                serviceName={service.title}
                 description={service.shortDescription}
                 items={service.items.slice(0, 4)}
                 icon={service.icon}

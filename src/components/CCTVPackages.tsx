@@ -9,6 +9,7 @@ import {
   MonitorSmartphone,
   Network,
   ShieldCheck,
+  MessageCircle,
   Video,
 } from "lucide-react";
 
@@ -17,6 +18,8 @@ import { cctvPackages, type CCTVPackage } from "@/data/cctvPackages";
 import ScrollReveal from "@/components/ScrollReveal";
 
 import { StaggerItem, StaggerReveal } from "@/components/StaggerReveal";
+
+import { createWhatsAppUrl } from "@/lib/whatsapp";
 
 /* =====================================================
    CCTV PACKAGES
@@ -320,6 +323,18 @@ function PackageCard({ cctvPackage }: { cctvPackage: CCTVPackage }) {
               Request Quote
               <ArrowRight size={15} />
             </Link>
+            <a
+              href={createWhatsAppUrl({
+                service: "CCTV & Security",
+                packageName: cctvPackage.name,
+              })}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-400/20 bg-emerald-400/[0.06] px-5 py-3 text-xs font-bold text-emerald-400 transition hover:border-emerald-400/40 hover:bg-emerald-400/10"
+            >
+              <MessageCircle size={15} />
+              WhatsApp Quote
+            </a>
           </div>
         </div>
       </div>
