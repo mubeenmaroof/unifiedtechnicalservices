@@ -17,7 +17,7 @@ export const siteConfig = {
     email: "",
     emailDisplay: "mub33n143@gmail.com",
 
-    whatsapp: "0324-4076279",
+    whatsapp: "923244076279",
 
     address: "",
     addressDisplay: "32-Ali Block New Garden Town, Lahore",

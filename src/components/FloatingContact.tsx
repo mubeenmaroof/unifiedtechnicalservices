@@ -17,6 +17,14 @@ export default function FloatingContact() {
 
   const whatsappAvailable = Boolean(siteConfig.contact.whatsapp);
 
+  const whatsappMessage = encodeURIComponent(
+    `Hello Unified Technical Services,
+
+I would like to discuss a project.
+
+Please share more information about your services.`,
+  );
+
   return (
     <div className="fixed bottom-[max(0.75rem,env(safe-area-inset-bottom))] right-[max(0.75rem,env(safe-area-inset-right))] z-[60] flex flex-col items-end gap-3 sm:bottom-7 sm:right-7">
       {/* CONTACT PANEL */}
@@ -42,7 +50,7 @@ export default function FloatingContact() {
 
             {whatsappAvailable && (
               <a
-                href={`https://wa.me/${siteConfig.contact.whatsapp}`}
+                href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.03] p-3 transition hover:border-emerald-400/30 hover:bg-emerald-400/[0.05]"
@@ -112,7 +120,7 @@ export default function FloatingContact() {
             {/* CONTACT PAGE */}
 
             <Link
-              href="/contact"
+              href="/contact#inquiry-form"
               onClick={() => setOpen(false)}
               className="flex items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.03] p-3 transition hover:border-sky-400/30 hover:bg-sky-400/[0.05]"
             >
