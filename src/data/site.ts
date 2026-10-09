@@ -12,15 +12,15 @@ export const siteConfig = {
 
   contact: {
     phone: "",
-    phoneDisplay: "0324-4076279",
+    phoneDisplay: "0313-4191121",
 
     email: "",
-    emailDisplay: "mub33n143@gmail.com",
+    emailDisplay: "info@unifiedtechnicalservices.com",
 
-    whatsapp: "923244076279",
+    whatsapp: "923134191121",
 
     address: "",
-    addressDisplay: "32-Ali Block New Garden Town, Lahore",
+    addressDisplay: "Plot E-102/A, Nishat Colony, Lahore",
 
     workingHours: "9:00 AM - 6:00 PM (Mon - Sat)",
 
@@ -31,8 +31,8 @@ export const siteConfig = {
        company latitude and longitude.
     =============================================== */
 
-    latitude: 31.502158,
-    longitude: 74.319366,
+    latitude: 31.495201,
+    longitude: 74.388445,
   },
 
   social: {
