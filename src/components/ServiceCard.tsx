@@ -29,8 +29,21 @@ export default function ServiceCard({
   icon: Icon,
   image,
 }: ServiceCardProps) {
+  const cardHref =
+    id === "cctv" ? "/services/cctv" : `/contact?service=${id}#inquiry-form`;
+
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#08192b] transition duration-300 hover:-translate-y-1 hover:border-sky-400/40 hover:shadow-2xl hover:shadow-sky-950/30">
+      <Link
+        href={cardHref}
+        aria-label={
+          id === "cctv"
+            ? `View ${title} packages`
+            : `Request ${title}`
+        }
+        className="absolute inset-0 z-10"
+      />
+
       {/* =================================================
           IMAGE
       ================================================= */}
@@ -86,14 +99,14 @@ export default function ServiceCard({
             ACTIONS
         ================================================= */}
 
-        <div className="mt-auto flex flex-wrap items-center gap-4 pt-6">
+        <div className="relative z-20 mt-auto flex flex-wrap items-center gap-4 pt-6">
           {/* EXPLORE SERVICE */}
 
           <Link
-            href={`/services#${id}`}
+            href={cardHref}
             className="inline-flex items-center gap-2 text-sm font-semibold text-sky-400 transition hover:text-sky-300"
           >
-            Explore Service
+            {id === "cctv" ? "View CCTV Packages" : "Request This Service"}
             <ArrowUpRight size={16} />
           </Link>
 

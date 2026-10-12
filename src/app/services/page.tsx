@@ -151,6 +151,10 @@ export default function ServicesPage() {
           <div className="mt-14 space-y-6">
             {services.map((service, index) => {
               const Icon = service.icon;
+              const serviceHref =
+                service.id === "cctv"
+                  ? "/services/cctv"
+                  : `/contact?service=${service.id}#inquiry-form`;
 
               return (
                 <ScrollReveal
@@ -160,8 +164,18 @@ export default function ServicesPage() {
                 >
                   <article
                     id={service.id}
-                    className="scroll-mt-28 overflow-hidden rounded-3xl border border-white/10 bg-[#08192b]"
+                    className="relative scroll-mt-28 overflow-hidden rounded-3xl border border-white/10 bg-[#08192b]"
                   >
+                    <Link
+                      href={serviceHref}
+                      aria-label={
+                        service.id === "cctv"
+                          ? `View ${service.title} packages`
+                          : `Request ${service.title}`
+                      }
+                      className="absolute inset-0 z-10"
+                    />
+
                     <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
                       {/* =====================================
                           SERVICE IMAGE
@@ -208,12 +222,8 @@ export default function ServicesPage() {
                           </p>
 
                           <Link
-                            href={
-                              service.id === "cctv"
-                                ? "/services/cctv"
-                                : `/contact?service=${service.id}`
-                            }
-                            className="mt-7 inline-flex w-fit items-center gap-2 rounded-lg border border-white/15 bg-[#020817]/70 px-5 py-3 text-sm font-semibold text-sky-400 backdrop-blur-xl transition hover:border-sky-400/30 hover:bg-[#020817]"
+                            href={serviceHref}
+                            className="relative z-20 mt-7 inline-flex w-fit items-center gap-2 rounded-lg border border-white/15 bg-[#020817]/70 px-5 py-3 text-sm font-semibold text-sky-400 backdrop-blur-xl transition hover:border-sky-400/30 hover:bg-[#020817]"
                           >
                             {service.id === "cctv"
                               ? "View CCTV Packages"
